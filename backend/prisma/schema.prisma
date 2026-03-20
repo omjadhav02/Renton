@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role
+  phone     String?
+  createdAt DateTime @default(now())
+
+  properties Property[]
+  bookings   Booking[]
+  reviews    Review[]
+  messages   ChatMessage[]
+  favorites  Favorite[]
+}
+
+model Property {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  city        String
+  address     String
+  propertyType String
+  bedrooms    Int
+  bathrooms   Int
+  ownerId     String
+  createdAt   DateTime @default(now())
+
+  owner       User @relation(fields: [ownerId], references: [id])
+  images      PropertyImage[]
+  bookings    Booking[]
+  reviews     Review[]
+  favorites   Favorite[]
+}
+
+model PropertyImage {
+  id         String @id @default(uuid())
+  imageUrl   String
+  propertyId String
+
+  property   Property @relation(fields: [propertyId], references: [id])
+}
+
+model Booking {
+  id         String   @id @default(uuid())
+  propertyId String
+  tenantId   String
+  status     BookingStatus
+  startDate  DateTime
+  endDate    DateTime
+  createdAt  DateTime @default(now())
+
+  property   Property @relation(fields: [propertyId], references: [id])
+  tenant     User     @relation(fields: [tenantId], references: [id])
+  payment    Payment?
+}
+
+model Payment {
+  id         String   @id @default(uuid())
+  bookingId  String   @unique
+  amount     Float
+  status     String
+  createdAt  DateTime @default(now())
+
+  booking    Booking @relation(fields: [bookingId], references: [id])
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  rating     Int
+  comment    String
+  propertyId String
+  tenantId   String
+  createdAt  DateTime @default(now())
+
+  property   Property @relation(fields: [propertyId], references: [id])
+  tenant     User     @relation(fields: [tenantId], references: [id])
+}
+
+model Favorite {
+  id         String @id @default(uuid())
+  userId     String
+  propertyId String
+
+  user       User     @relation(fields: [userId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id])
+}
+
+model ChatMessage {
+  id         String   @id @default(uuid())
+  senderId   String
+  receiverId String
+  message    String
+  createdAt  DateTime @default(now())
+
+  sender     User @relation(fields: [senderId], references: [id])
+}
+
+enum Role {
+  tenant
+  owner
+  admin
+}
+
+enum BookingStatus {
+  pending
+  approved
+  cancelled
+}
