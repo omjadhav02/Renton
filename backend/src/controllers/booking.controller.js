@@ -40,7 +40,6 @@ export const createBooking = async(req,res)=> {
     }
 }
 
-
 export const getMyBookings = async (req, res) => {
     try {
         const bookings = await prisma.booking.findMany({
@@ -78,12 +77,17 @@ export const getOwnerBookings = async (req, res)=>{
                 }
             },
             include: {
-                property: true,
+                property: {
+                    include: {
+                        images: true
+                    }
+                },
                 tenant: {
                     select: {
                         id: true,
                         name: true,
-                        email: true
+                        email: true,
+                        phone: true,
                     }
                 }
             }

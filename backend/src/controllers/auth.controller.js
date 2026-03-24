@@ -33,6 +33,7 @@ export const register = async (req, res)=>{
             user
         })
     } catch (error) {
+        console.error(error)
         res.status(500).json({error: error.message})
     }
 }
@@ -74,6 +75,7 @@ export const login = async (req, res) => {
             user
         })
     } catch (error) {
+        console.error(error);
         res.status(500).json({error: error.message});
     }
 }
@@ -90,18 +92,60 @@ export const logout = (req, res)=>{
     })
 }
 
-
-
 export const getMe = async (req,res)=>{
-    const user = await prisma.user.findUnique({
-        where: { id: req.user.userId },
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            role: true
-        }
-    })
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: req.user.userId },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                phone: true,
+                address: true,
+                city: true,
+                state: true,
+                country: true,                
+                postCode: true,
+            }
+        })
 
-    res.json(user);
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: error.message});
+    }
+    
+}
+
+export const updateUser = async(req,res) => {
+    try {
+        const {name, phone, address, city, country, state, postCode } = req.body;
+
+        if(!name && !phone && !address && !city && !country && !state && !postCode){
+            return res.status(400).json({message:"No Content to Update!"})
+        }
+
+        const user = await prisma.user.findUnique({
+            where: {id: req.user.userId}
+        })
+
+        if(!user){
+            return res.status(404).json({message:"User not found!"});
+        }
+
+        await prisma.user.update({
+            where: { id: user.id},
+            data: req.body,
+        })
+
+        res.json({
+            message: "User updated successfully!",
+            updatedFields: req.body,
+        });
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: error.message});
+    }
 }

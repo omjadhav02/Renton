@@ -12,6 +12,7 @@ import Footer from "./components/Footer/Footer";
 import AddProperty from "./pages/AddProperty";
 import EditProperty from "./pages/EditProperty";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import Settings from "./pages/Settings";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/owner/edit-property/:id" element={<ProtectedRoute role="owner">
           <EditProperty/>
           </ProtectedRoute>}/>
+        <Route path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>
