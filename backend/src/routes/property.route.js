@@ -4,7 +4,8 @@ import {
   getProperties,
   getPropertyById,
   updateProperty,
-  deleteProperty
+  deleteProperty,
+  searchProperties
 } from "../controllers/property.controller.js";
 
 import { authenticate } from "../middleware/auth.middleware.js";
@@ -15,6 +16,8 @@ const router = express.Router();
 router.post("/", authenticate, authorizeRoles("owner"), createProperty);
 
 router.get("/", getProperties);
+
+router.get("/search", searchProperties);
 
 router.get("/:id", getPropertyById);
 

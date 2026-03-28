@@ -1,127 +1,94 @@
 import {
-  IoCheckmark,
-  IoClose,
-  IoCallOutline,
-  IoMailOutline,
-  IoChatbubbleEllipsesOutline,
   IoCalendarOutline,
+  IoCheckmarkCircleOutline,
+  IoTimeOutline,
+  IoCloseCircleOutline
 } from "react-icons/io5";
+import PropertyInfo from "./PropertyInfo";
+import Actions from "./Actions";
 
-const RequestCard = ({ request, onApprove, onReject, onChat }) => {
+const RequestCard = ({ request, onApprove, onReject, onChat, onDelete }) => {
 
   const image =
     request.property?.images?.[0]?.imageUrl ||
     "https://via.placeholder.com/300";
 
   const tenant = request.tenant;
+  const property = request.property;
 
-  const getStatusStyle = (status) => {
+  const info = { request, onApprove, onChat, onReject, tenant, onDelete };
+
+  const getStatusConfig = (status) => {
     switch (status) {
       case "approved":
-        return "bg-green-100 text-green-700";
+        return {
+          style: "bg-green-100 text-green-700",
+          icon: <IoCheckmarkCircleOutline />
+        };
       case "pending":
-        return "bg-yellow-100 text-yellow-700";
+        return {
+          style: "bg-yellow-100 text-yellow-700",
+          icon: <IoTimeOutline />
+        };
       case "cancelled":
-        return "bg-red-100 text-red-700";
+        return {
+          style: "bg-red-100 text-red-700",
+          icon: <IoCloseCircleOutline />
+        };
       default:
-        return "bg-gray-100 text-gray-600";
+        return {
+          style: "bg-gray-100 text-gray-600",
+          icon: null
+        };
     }
   };
 
+  const status = getStatusConfig(request.status);
+
   return (
-    <div className="flex gap-5 bg-white p-5 rounded-2xl shadow-sm border hover:shadow-md transition">
+    <div className="flex gap-5 backdrop-blur-xl bg-white/70 border border-white/40 p-5 rounded-3xl shadow-sm hover:shadow-md transition">
 
       {/* IMAGE */}
       <img
         src={image}
         alt="property"
-        className="w-32 h-24 object-cover rounded-xl"
+        className="w-32 h-24 object-cover rounded-2xl"
       />
 
-      {/* CONTENT */}
-      <div className="flex-1">
+      <div className="flex-1 space-y-4">
 
         {/* TOP */}
         <div className="flex justify-between items-start">
 
           <div>
-            <h2 className="text-lg font-semibold">
-              {request.property.title}
+            <h2 className="text-lg font-semibold text-gray-900">
+              {property.title}
             </h2>
 
-            <p className="text-gray-500 text-sm">
-              Tenant: {tenant.name}
+            <p className="text-gray-500 text-sm mt-1">
+              Tenant: <span className="text-gray-700 font-medium">{tenant.name}</span>
             </p>
           </div>
 
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusStyle(request.status)}`}>
+          <span className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${status.style}`}>
+            {status.icon}
             {request.status}
           </span>
 
         </div>
 
         {/* DATES */}
-        <div className="mt-3 text-sm text-gray-600 flex items-center gap-2">
+        <div className="text-sm text-gray-500 flex items-center gap-2">
           <IoCalendarOutline size={16} />
-          {new Date(request.startDate).toLocaleDateString()}
-          {" → "}
+          {new Date(request.startDate).toLocaleDateString()} →
           {new Date(request.endDate).toLocaleDateString()}
         </div>
 
+        {/* PROPERTY INFO */}
+        <PropertyInfo property={property} />
+
         {/* ACTIONS */}
-        <div className="mt-4 flex flex-wrap gap-3">
-
-          {/* PENDING ACTIONS */}
-          {request.status === "pending" && (
-            <>
-              <button
-                onClick={() => onApprove(request.id)}
-                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm"
-              >
-                <IoCheckmark />
-                Approve
-              </button>
-
-              <button
-                onClick={() => onReject(request.id)}
-                className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm"
-              >
-                <IoClose />
-                Reject
-              </button>
-            </>
-          )}
-
-          {/* APPROVED ACTIONS (CONTACT TENANT) */}
-          {request.status === "approved" && tenant && (
-            <>
-              {tenant.phone && (
-                <a
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-xl text-sm hover:bg-gray-200 transition"
-                >
-                  <IoCallOutline size={16} />
-                  {tenant.phone}
-                </a>
-              )}
-
-              <a
-                className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-xl text-sm hover:bg-gray-200 transition"
-              >
-                <IoMailOutline size={16} />
-                {tenant.email}
-              </a>
-
-              <button
-                onClick={() => onChat(tenant)}
-                className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-xl text-sm hover:opacity-90 transition"
-              >
-                <IoChatbubbleEllipsesOutline size={16} />
-                Chat
-              </button>
-            </>
-          )}
-
-        </div>
+        <Actions info={info} />
 
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getMyBookings } from "../services/bookingService";
+import { deleteBookingRequest, getMyBookings } from "../services/bookingService";
 import toast from "react-hot-toast"
 
 export const useBookings = () => {
@@ -25,9 +25,23 @@ export const useBookings = () => {
         }
     }
 
+    const deleteBooking = async (id) => {
+        try {
+            setLoading(true)
+            await deleteBookingRequest(id);
+            fetchBookings();
+            toast.success("Booking Removed!")
+        } catch (error) {
+            setError(error);
+            toast.error("Failed to Remove!");
+        } finally {
+            setLoading(false);
+        }
+    }
+
     useEffect(() => {
         fetchBookings();
     },[]);
 
-    return { bookings, loading, error};
+    return { bookings, loading, error, deleteBooking};
 }

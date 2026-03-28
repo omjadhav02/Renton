@@ -10,8 +10,8 @@ function Home() {
       <Hero onSearch={handleSearch}></Hero>
 
       {error && (
-        <p className="text-red-500 text-center mt-4"> 
-          {error}
+        <p className="text-red-500 text-center mt-4">
+          {typeof error === "string" ? error : error?.message}
         </p>
       )}
 

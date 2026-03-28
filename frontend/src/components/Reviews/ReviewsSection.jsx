@@ -1,73 +1,63 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../api/axios";
 import ReviewCard from "./ReviewCard";
 import ReviewForm from "./ReviewForm";
 import { motion } from "framer-motion";
+import { useReview } from "../../hooks/useReview";
 
 function ReviewsSection({ propertyId }) {
-
-    const [reviews, setReviews] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const fetchReviews = async () => {
-        try {
-            const res = await axiosInstance.get(`/reviews/property/${propertyId}`);
-            setReviews(res.data);
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchReviews();
-    }, [propertyId]);
-
-    const handleNewReview = (review) => {
-        setReviews(prev => [review, ...prev]);
-    };
-
-    const handleDelete = (id) => {
-        setReviews(prev => prev.filter(r => r.id !== id));
-    };
-
-    const avgRating =
-        reviews.length > 0
-            ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
-            : 0;
+    const {
+        reviews,
+        loading,
+        avgRating,
+        handleDelete,
+        handleSubmit,
+        rating,
+        comment,
+        setRating,
+        setComment,
+        user
+    } = useReview(propertyId);
 
     return (
         <div className="mt-20">
 
-            <div className="flex items-center gap-3 mb-6">
-                <h2 className="text-2xl font-semibold">
-                    Reviews
-                </h2>
-                {reviews.length > 0 && (
-                    <span className="text-gray-600">
-                        ⭐ {avgRating} ({reviews.length})
-                    </span>
-                )}
+            {/* HEADER */}
+            <div className="flex items-center justify-between mb-8">
+
+                <div>
+                    <h2 className="text-2xl font-semibold text-gray-900">
+                        Reviews
+                    </h2>
+
+                    {reviews.length > 0 && (
+                        <p className="text-sm text-gray-500 mt-1">
+                            ⭐ {avgRating} · {reviews.length} reviews
+                        </p>
+                    )}
+                </div>
+
             </div>
 
-            <ReviewForm
-                propertyId={propertyId}
-                onReviewAdded={handleNewReview}
+            {/* FORM */}
+            <ReviewForm 
+                handleSubmit={handleSubmit}
+                rating={rating}
+                comment={comment}
+                setRating={setRating}
+                setComment={setComment}
+                user={user}
             />
 
+            {/* LIST */}
             {loading ? (
-                <p className="mt-6">Loading...</p>
+                <p className="mt-6 text-gray-500">Loading reviews...</p>
             ) : reviews.length === 0 ? (
-                <p className="text-gray-500 mt-6">
-                    No reviews yet
-                </p>
+                <div className="mt-8 p-6 rounded-2xl bg-gray-50 text-center">
+                    <p className="text-gray-500">
+                        No reviews yet
+                    </p>
+                </div>
             ) : (
-                <motion.div
-                    className="space-y-6 mt-8"
-                    initial="hidden"
-                    animate="visible"
-                >
+                <motion.div className="space-y-6 mt-10">
                     {reviews.map((review) => (
                         <ReviewCard
                             key={review.id}
@@ -77,7 +67,6 @@ function ReviewsSection({ propertyId }) {
                     ))}
                 </motion.div>
             )}
-
         </div>
     );
 }

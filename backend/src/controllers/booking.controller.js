@@ -68,7 +68,7 @@ export const getMyBookings = async (req, res) => {
     }
 };
 
-export const getOwnerBookings = async (req, res)=>{
+export const getBookingRequests = async (req, res)=>{
     try {
         const bookings = await prisma.booking.findMany({
             where: {
@@ -118,6 +118,24 @@ export const updateBookingStatus = async(req,res)=>{
         }
 
         res.json(booking);
+    } catch (error) {
+        res.status(500).json({error: error.message});
+    }
+}
+
+export const deleteBookingRequest = async (req,res) =>{
+    try {
+        const { id } = req.params;
+
+        const booking = await prisma.booking.delete({
+            where: { id }
+        })
+
+        if(!booking) {
+            return res.status(404).json({error: "Booking not found"});
+        }
+        res.json(booking);
+
     } catch (error) {
         res.status(500).json({error: error.message});
     }

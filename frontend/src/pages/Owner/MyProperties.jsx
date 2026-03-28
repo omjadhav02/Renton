@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../api/axios";
-import { useAuth } from "../context/AuthContext";
-import OwnerPropertyCard from "../components/OwnerPropertyCard";
+import axiosInstance from "../../api/axios";
+import { useAuth } from "../../context/AuthContext";
+import OwnerPropertyCard from "../../components/OwnerPropertyCard";
 
-function OwnerProperties() {
+function MyProperties() {
 
   const { user } = useAuth();
   const [properties, setProperties] = useState([]);
@@ -64,4 +64,4 @@ function OwnerProperties() {
 
 }
 
-export default OwnerProperties;
+export default MyProperties;

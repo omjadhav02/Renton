@@ -33,6 +33,7 @@ model Property {
   title       String
   description String
   price       Float
+  deposit     Float?
   city        String
   address     String
   state       String?
@@ -60,6 +61,20 @@ model PropertyImage {
 }
 
 model Booking {
+  id         String   @id @default(uuid())
+  propertyId String
+  tenantId   String
+  status     BookingStatus
+  startDate  DateTime
+  endDate    DateTime
+  createdAt  DateTime @default(now())
+
+  property   Property @relation(fields: [propertyId], references: [id])
+  tenant     User     @relation(fields: [tenantId], references: [id])
+  payment    Payment?
+}
+
+model Request {
   id         String   @id @default(uuid())
   propertyId String
   tenantId   String

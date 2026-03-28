@@ -1,143 +1,22 @@
-import { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axiosInstance from "../api/axios";
-import toast from "react-hot-toast";
+import { IoImagesOutline } from "react-icons/io5"
+import { useEditProperty } from "../../hooks/useEditProperty";
+import { useRef } from "react";
 
 function EditProperty() {
-
-  const { id } = useParams();
-  const navigate = useNavigate();
   const fileInputRef = useRef();
-
-  const [form, setForm] = useState({
-    title: "",
-    description: "",
-    price: "",
-    city: "",
-    address: "",
-    propertyType: "",
-    bedrooms: "",
-    bathrooms: ""
-  });
-
-  const [existingImages, setExistingImages] = useState([]);
-  const [newImages, setNewImages] = useState([]);
-  const [preview, setPreview] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // fetch property
-  useEffect(() => {
-    const fetchProperty = async () => {
-      try {
-        const res = await axiosInstance.get(`/properties/${id}`);
-
-        setForm({
-          title: res.data.title,
-          description: res.data.description,
-          price: res.data.price,
-          city: res.data.city,
-          address: res.data.address,
-          propertyType: res.data.propertyType,
-          bedrooms: res.data.bedrooms,
-          bathrooms: res.data.bathrooms
-        });
-
-        setExistingImages(res.data.images || []);
-        setLoading(false);
-
-      } catch (error) {
-        toast.error("Failed to load property");
-      }
-    };
-
-    fetchProperty();
-  }, [id]);
-
-  // handle inputs
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  // new image select
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files).slice(0, 5);
-
-    setNewImages(files);
-
-    const previewUrls = files.map((file) =>
-      URL.createObjectURL(file)
-    );
-
-    setPreview(previewUrls);
-  };
-
-  // remove new image
-  const removeNewImage = (index) => {
-    setNewImages((prev) => prev.filter((_, i) => i !== index));
-    setPreview((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  // delete existing image
-  const handleRemoveExisting = async (imageId) => {
-    try {
-      await axiosInstance.delete(`/upload/image/${imageId}`);
-
-      setExistingImages((prev) =>
-        prev.filter((img) => img.id !== imageId)
-      );
-
-      toast.success("Image removed");
-    } catch (error) {
-      toast.error("Failed to delete image");
-    }
-  };
-
-  // update property
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      setLoading(true);
-
-      // update property
-      await axiosInstance.put(`/properties/${id}`, form);
-
-      // upload new images
-      if (newImages.length > 0) {
-        const formData = new FormData();
-
-        newImages.forEach((img) => {
-          formData.append("images", img);
-        });
-
-        await axiosInstance.post(
-          `/upload/property/${id}`,
-          formData
-        );
-      }
-
-      toast.success("Property updated!");
-      navigate("/owner/properties");
-
-    } catch (error) {
-      toast.error("Update failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // delete property
-  const handleDelete = async () => {
-    if (!window.confirm("Delete this property?")) return;
-
-    try {
-      await axiosInstance.delete(`/properties/${id}`);
-      toast.success("Property deleted");
-      navigate("/owner/properties");
-    } catch (error) {
-      toast.error("Delete failed");
-    }
-  };
+  const {
+    form,
+    existingImages,
+    preview,
+    loading,
+    handleChange,
+    handleImageChange,
+    removeNewImage,
+    handleRemoveExisting,
+    handleSubmit,
+    handleDelete,
+  } = useEditProperty();
+  
 
   if (loading) return <p className="p-6">Loading...</p>;
 
@@ -180,6 +59,18 @@ function EditProperty() {
               placeholder="Price" 
               required
             />
+
+            <input
+              type="number"
+              name="deposit"
+              value={form.deposit}
+              onChange={handleChange}
+              className="border p-3 rounded-lg"
+              placeholder="Deposit" 
+              required
+            />
+            
+
           </div>
         </div>
 
@@ -188,15 +79,6 @@ function EditProperty() {
           <h2 className="text-xl font-semibold mb-4">Location</h2>
 
           <div className="grid md:grid-cols-2 gap-5">
-            <input
-              type="text"
-              name="city"
-              value={form.city}
-              onChange={handleChange}
-              className="border p-3 rounded-lg"
-              placeholder="City"
-              required
-            />
 
             <input
               type="text"
@@ -207,6 +89,42 @@ function EditProperty() {
               placeholder="Address"
               required
             />
+            <input
+              type="text"
+              name="city"
+              value={form.city}
+              onChange={handleChange}
+              className="border p-3 rounded-lg"
+              placeholder="City"
+              required
+            />
+            <input
+              type="text"
+              name="state"
+              value={form.state}
+              onChange={handleChange}
+              className="border p-3 rounded-lg"
+              placeholder="State"
+              required
+            />
+            <input
+              type="text"
+              name="country"
+              value={form.country}
+              onChange={handleChange}
+              className="border p-3 rounded-lg"
+              placeholder="Country"
+              required
+            />
+            <input
+              type="text"
+              name="postCode"
+              value={form.postCode}
+              onChange={handleChange}
+              className="border p-3 rounded-lg"
+              placeholder="Postal Code"
+              required
+            />
           </div>
         </div>
 
@@ -215,15 +133,19 @@ function EditProperty() {
           <h2 className="text-xl font-semibold mb-4">Property Details</h2>
 
           <div className="grid md:grid-cols-3 gap-5">
-            <input
-              type="text"
+            <select
               name="propertyType"
               value={form.propertyType}
               onChange={handleChange}
               className="border p-3 rounded-lg"
-              placeholder="Type"
+              placeholder="Select Propeterty Type"
               required
-            />
+            >
+              <option>Apartment</option>
+              <option>House</option>
+              <option>Villa</option>
+              <option>Studio</option>
+            </select>
 
             <input
               type="number"
@@ -296,8 +218,12 @@ function EditProperty() {
             multiple
             ref={fileInputRef}
             onChange={handleImageChange}
-            className="mb-4"
+            className="hidden"
           />
+
+          <button type="button" onClick={() => fileInputRef.current.click()} className="p-2.5 rounded-xl flex items-center gap-1 bg-gray-10 shadow-sm hover:cursor-pointer hover:bg-gray-200">
+            <IoImagesOutline className="inline"/>Choose Images
+          </button>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {preview.map((img, index) => (

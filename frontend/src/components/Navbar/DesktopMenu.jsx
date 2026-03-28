@@ -27,7 +27,7 @@ function DesktopMenu({ user, onLogout }) {
           </Link>
 
           <Link to="/my-bookings" className="flex gap-1 hover:text-blue-600">
-            <IoCalendarOutline/> Bookings
+            <IoCalendarOutline/> My Bookings
           </Link>
         </>
       )}
@@ -41,12 +41,12 @@ function DesktopMenu({ user, onLogout }) {
             <IoAdd/> Add Property
           </Link>
 
-          <Link to="/owner/properties" className="flex gap-1 hover:text-blue-600">
-            <IoBusinessOutline/> Properties
+          <Link to="/owner/my-properties" className="flex gap-1 hover:text-blue-600">
+            <IoBusinessOutline/> My Properties
           </Link>
 
-          <Link to="/owner/bookings" className="flex gap-1 hover:text-blue-600">
-            <IoCalendarOutline/> Bookings
+          <Link to="/owner/requests" className="flex gap-1 hover:text-blue-600">
+            <IoCalendarOutline/> Requests
           </Link>
         </>
       )}

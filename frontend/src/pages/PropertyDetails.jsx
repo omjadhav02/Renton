@@ -1,41 +1,31 @@
-import { useParams } from "react-router-dom";
-import axiosInstance from "../api/axios";
-import { useEffect, useState } from "react";
-
 import PropertyHeader from "../components/PropertyDetails/PropertyHeader";
 import PropertyGallery from "../components/PropertyDetails/PropertyGallery";
 import PropertyInfo from "../components/PropertyDetails/PropertyInfo";
 import BookingCard from "../components/PropertyDetails/BookingCard";
 import ImageModal from "../components/PropertyDetails/ImageModal";
 import ReviewsSection from "../components/Reviews/ReviewsSection";
+import { usePropertyDetails } from "../hooks/usePropertyDetails";
 
 function PropertyDetails() {
-    const { id } = useParams();
+    const {
+        property,
+        images,
+        currentImage,
+        setCurrentImage,
+        showModal,
+        setShowModal
+    } = usePropertyDetails();
 
-    const [property, setProperty] = useState(null);
-    const [currentImage, setCurrentImage] = useState(0);
-    const [showModal, setShowModal] = useState(false);
-
-    useEffect(() => {
-        const fetchProperty = async () => {
-            try {
-                const res = await axiosInstance.get(`/properties/${id}`);
-                setProperty(res.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchProperty();
-    }, [id]);
-
-    if (!property) return <p className="p-6">Loading...</p>;
-
-    const images = property.images?.length
-        ? property.images.map(img => img.imageUrl)
-        : ["https://via.placeholder.com/900x500?text=No+Image"];
+    if (!property) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <p className="text-gray-500">Loading property...</p>
+            </div>
+        );
+    }
 
     return (
-        <div className="max-w-7xl mx-auto px-6 py-10">
+        <div className="max-w-7xl mx-auto px-6 py-10 bg-gray-50 min-h-screen">
 
             <PropertyHeader property={property} />
 
@@ -46,11 +36,16 @@ function PropertyDetails() {
                 setShowModal={setShowModal}
             />
 
-            <div className="grid lg:grid-cols-3 gap-12 mt-10">
+            <div className="grid lg:grid-cols-3 gap-10 mt-10 items-start">
 
-                <PropertyInfo property={property} />
+                <div className="lg:col-span-2">
+                    <PropertyInfo property={property} />
+                </div>
 
-                <BookingCard propertyId={property.id} price={property.price} />
+                <BookingCard
+                    propertyId={property.id}
+                    price={property.price}
+                />
 
             </div>
 
@@ -63,7 +58,9 @@ function PropertyDetails() {
                 />
             )}
 
-            <ReviewsSection propertyId={property.id} />
+            <div className="mt-12">
+                <ReviewsSection propertyId={property.id} />
+            </div>
         </div>
     );
 }

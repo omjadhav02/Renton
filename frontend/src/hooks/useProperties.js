@@ -23,16 +23,22 @@ export const useProperties = () => {
         }
     }
 
-    const handleSearch = async (query) => {
+    const handleSearch = async (filters) => {
         try {
             setLoading(true);
             setError(null);
 
-            const data = await searchProperties(query);
+            
+            const data = await searchProperties(filters);
             setProperties(data)
 
         } catch (error) {
-            setError(error)
+            const msg =
+                error.response?.data?.message ||
+                error.message ||
+                "Search failed";
+
+            setError(msg);
         } finally {
             setLoading(false);
         }

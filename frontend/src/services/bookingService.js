@@ -5,12 +5,24 @@ export const getMyBookings = async () => {
     return res.data;
 }
 
-export const getOwnerBookings = async () => {
+export const getBookingRequests = async () => {
     const res = await axiosInstance.get("/bookings/owner");
+    return res.data;
+}
+
+export const createBooking = async (propertyId, startDate, endDate) => {
+    const res = await axiosInstance.post("/bookings", { propertyId, startDate, endDate })
+
     return res.data;
 }
 
 export const updateBookingStatus = async (id, status) => {
     const res = await axiosInstance.put(`/bookings/${id}`,{ status });
+    return res.data;
+}
+
+export const deleteBookingRequest = async (id) => {
+    const res = await axiosInstance.delete(`/bookings/${id}`);
+
     return res.data;
 }

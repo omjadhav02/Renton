@@ -1,16 +1,16 @@
 import RequestCard from "./RequestCard";
 
-const RequestList = ({ requests, onApprove, onReject, onChat }) => {
+const RequestList = ({ requests, onApprove, onReject, onChat, onDelete }) => {
   if (requests.length === 0) {
     return (
-      <div className="text-center text-gray-500 mt-10">
-        No booking requests yet.
+      <div className="mt-10 p-10 text-center rounded-3xl bg-white/70 backdrop-blur-xl border border-white/40">
+        <p className="text-gray-500">No booking requests yet.</p>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-5">
       {requests.map((request) => (
         <RequestCard
           key={request.id}
@@ -18,6 +18,7 @@ const RequestList = ({ requests, onApprove, onReject, onChat }) => {
           onApprove={onApprove}
           onReject={onReject}
           onChat={onChat}
+          onDelete={onDelete}
         />
       ))}
     </div>

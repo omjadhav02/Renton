@@ -27,7 +27,7 @@ function MobileMenu({ user, onLogout, closeMenu }) {
           </Link>
 
           <Link to="/my-bookings" onClick={closeMenu} className="flex gap-2">
-            <IoCalendarOutline/> Bookings
+            <IoCalendarOutline/> My Bookings
           </Link>
         </>
       )}
@@ -38,11 +38,11 @@ function MobileMenu({ user, onLogout, closeMenu }) {
             <IoAdd/> Add Property
           </Link>
 
-          <Link to="/owner/properties" onClick={closeMenu} className="flex gap-2">
-            <IoBusinessOutline/> Properties
+          <Link to="/owner/my-properties" onClick={closeMenu} className="flex gap-2">
+            <IoBusinessOutline/> My Properties
           </Link>
 
-          <Link to="/owner/bookings" onClick={closeMenu} className="flex gap-2">
+          <Link to="/owner/requests" onClick={closeMenu} className="flex gap-2">
             <IoCalendarOutline/> Requests
           </Link>
         </>

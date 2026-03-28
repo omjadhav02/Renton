@@ -1,17 +1,19 @@
 import { useState } from "react";
-import axiosInstance from "../api/axios";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { useAddProperty } from "../../hooks/useAddProperty";
 
 function AddProperty() {
-  const navigate = useNavigate();
+  const { handleSubmit } = useAddProperty();
 
   const [form, setForm] = useState({
     title: "",
     description: "",
+    deposit:"",
     price: "",
-    city: "",
     address: "",
+    city: "",
+    state:"",
+    country:"",
+    postCode: "",
     propertyType: "",
     bedrooms: "",
     bathrooms: ""
@@ -44,39 +46,6 @@ function AddProperty() {
     setPreview(newPreview);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      setLoading(true);
-
-      const res = await axiosInstance.post("/properties", form);
-      const propertyId = res.data.id;
-
-      if (images.length > 0) {
-        const formData = new FormData();
-
-        images.forEach((img) => {
-          formData.append("images", img);
-        });
-
-        await axiosInstance.post(
-          `/upload/property/${propertyId}`,
-          formData
-        );
-      }
-
-      toast.success("Property created successfully!");
-      navigate("/owner/properties");
-
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to create property. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
 
@@ -89,7 +58,7 @@ function AddProperty() {
       </p>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e)=> handleSubmit({e, form, images, setLoading})}
         className="bg-white p-8 rounded-2xl shadow space-y-8"
       >
 
@@ -117,6 +86,15 @@ function AddProperty() {
               className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
               required
             />
+            <input
+              type="number"
+              name="deposit"
+              placeholder="Deposit(₹)"
+              value={form.deposit}
+              onChange={handleChange}
+              className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
+              required
+            />
           </div>
         </div>
 
@@ -125,6 +103,16 @@ function AddProperty() {
           <h2 className="text-xl font-semibold mb-4">Location</h2>
 
           <div className="grid md:grid-cols-2 gap-5">
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={form.address}
+              onChange={handleChange}
+              className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
+              required
+            />
+
             <input
               type="text"
               name="city"
@@ -137,9 +125,27 @@ function AddProperty() {
 
             <input
               type="text"
-              name="address"
-              placeholder="Full Address"
-              value={form.address}
+              name="state"
+              placeholder="State"
+              value={form.state}
+              onChange={handleChange}
+              className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            <input
+              type="text"
+              name="country"
+              placeholder="Country"
+              value={form.country}
+              onChange={handleChange}
+              className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            <input
+              type="text"
+              name="postCode"
+              placeholder="Postal Code"
+              value={form.postCode}
               onChange={handleChange}
               className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
               required
@@ -159,9 +165,9 @@ function AddProperty() {
               value={form.propertyType}
               onChange={handleChange}
               className="border p-3 rounded-lg"
+              placeholder="Select Property Type"
               required
             >
-              <option value="">Select Type</option>
               <option>Apartment</option>
               <option>House</option>
               <option>Villa</option>

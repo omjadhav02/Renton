@@ -1,49 +1,33 @@
-import axiosInstance from "../../api/axios";
-import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
-import toast from "react-hot-toast"
+import { useAuth } from "../../context/AuthContext";
 
 function ReviewCard({ review, onDelete }) {
 
     const { user } = useAuth();
-
     const isOwner = user?.id === review.tenantId;
-
-    const handleDelete = async () => {
-        try {
-            await axiosInstance.delete(`/reviews/${review.id}`);
-            onDelete(review.id);
-            toast.success("Review Deleted!")
-        } catch (error){
-            console.error(error)
-            toast.error("Review deletion failed!")
-        }
-    };
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="bg-white p-5 rounded-2xl border shadow-sm"
+            className="backdrop-blur-xl bg-white/70 border border-white/40 p-5 rounded-3xl shadow-sm hover:shadow-md transition"
         >
+            <div className="flex justify-between items-start">
 
-            <div className="flex justify-between items-center">
-
+                {/* USER INFO */}
                 <div>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-gray-900">
                         {review.tenant?.name || "User"}
                     </p>
 
-                    <div className="text-yellow-500 text-sm">
+                    <div className="text-yellow-400 text-sm mt-1">
                         {"★".repeat(review.rating)}
                     </div>
                 </div>
 
+                {/* DELETE */}
                 {isOwner && (
                     <button
-                        onClick={handleDelete}
-                        className="text-sm text-red-500 hover:underline"
+                        onClick={() => onDelete(review.id)}
+                        className="text-xs px-3 py-1 rounded-full bg-red-50 text-red-500 hover:bg-red-100 transition"
                     >
                         Delete
                     </button>
@@ -51,10 +35,10 @@ function ReviewCard({ review, onDelete }) {
 
             </div>
 
-            <p className="text-gray-600 mt-3 leading-relaxed">
+            {/* COMMENT */}
+            <p className="text-gray-600 mt-4 text-sm leading-relaxed">
                 {review.comment}
             </p>
-
         </motion.div>
     );
 }

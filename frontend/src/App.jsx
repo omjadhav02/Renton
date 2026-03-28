@@ -5,20 +5,22 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PropertyDetails from "./pages/PropertyDetails";
 import Navbar from "./components/Navbar/Navbar";
-import MyBookings from "./pages/MyBookings";
-import OwnerBookings from "./pages/OwnerBookings";
-import OwnerProperties from "./pages/OwnerProperties";
+import MyBookings from "./pages/Tenant/MyBookings";
 import Footer from "./components/Footer/Footer";
-import AddProperty from "./pages/AddProperty";
-import EditProperty from "./pages/EditProperty";
+import AddProperty from "./pages/Owner/AddProperty";
+import EditProperty from "./pages/Owner/EditProperty";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Settings from "./pages/Settings";
+import MyProperties from "./pages/Owner/MyProperties";
+import Requests from "./pages/Owner/Requests";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 function App() {
   return (
     
     <BrowserRouter>
+      <ScrollToTop/>
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -32,11 +34,11 @@ function App() {
           </ProtectedRoute>}/>
 
 
-        <Route path="/owner/properties" element={<ProtectedRoute role="owner">
-          <OwnerProperties/>
+        <Route path="/owner/my-properties" element={<ProtectedRoute role="owner">
+          <MyProperties/>
           </ProtectedRoute>}/>
-        <Route path="/owner/bookings" element={<ProtectedRoute role="owner">
-          <OwnerBookings/>
+        <Route path="/owner/requests" element={<ProtectedRoute role="owner">
+          <Requests/>
           </ProtectedRoute>}/>
         <Route path="/owner/create-property" element={<ProtectedRoute role="owner">
           <AddProperty/>

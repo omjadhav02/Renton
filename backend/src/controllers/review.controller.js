@@ -25,6 +25,13 @@ export const createReview = async (req, res) => {
         comment,
         propertyId,
         tenantId: req.user.userId
+      },
+      include: {
+        tenant: {
+            select: {
+                name: true
+            }
+        }
       }
     });
 
@@ -49,7 +56,7 @@ export const getPropertyReviews = async (req, res) => {
                     select: {
                     name: true
                     }
-                }
+                },
             }
         });
         if(!reviews){
