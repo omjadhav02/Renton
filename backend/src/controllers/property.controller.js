@@ -116,7 +116,10 @@ export const searchProperties = async (req, res) => {
     }
 
     if(propertyType){
-      filters.propertyType = propertyType;
+      filters.propertyType = {
+        contains: propertyType,
+        mode: "insensitive"
+      }
     }
 
     if(bedrooms){
