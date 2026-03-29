@@ -104,7 +104,7 @@ export const getPropertyById = async (req, res)=>{
 
 export const searchProperties = async (req, res) => {
   try {
-    const { city, minPrice, maxPrice, bedrooms, propertyType } = req.query;
+    const { country, state, city, minPrice, maxPrice, bedrooms, propertyType } = req.query;
 
     const filters = {};
 
@@ -114,6 +114,21 @@ export const searchProperties = async (req, res) => {
         mode: "insensitive"
       }
     }
+    
+    if(state){
+      filters.state = {
+        contains: state,
+        mode: "insensitive"
+      }
+    }
+
+    if(country){
+      filters.country = {
+        contains: country,
+        mode: "insensitive"
+      }
+    }
+
 
     if(propertyType){
       filters.propertyType = {

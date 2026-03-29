@@ -3,8 +3,11 @@ import { useState } from "react";
 export const useSearchProperty = (onSearch) => {
     const [filters, setFilters] = useState({
         city: "",
+        state: "",
+        country: "",
         bedrooms: "",
         propertyType: "",
+
       });
     
       const [price, setPrice] = useState([0, 100000]);

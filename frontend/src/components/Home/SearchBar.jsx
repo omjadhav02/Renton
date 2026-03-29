@@ -22,12 +22,28 @@ const SearchBar = ({
 
         {/* LOCATION */}
         <div className="flex items-center gap-2 px-4 flex-1 group">
-          <IoLocationOutline className="text-indigo-500 group-hover:scale-110 transition" size={18} />
+          <IoLocationOutline className="text-indigo-500 group-hover:scale-110 transition" size={50} />
           <input
             type="text"
             name="city"
-            placeholder="Search location"
+            placeholder="City"
             value={filters.city}
+            onChange={handleChange}
+            className="w-full bg-transparent outline-none text-sm placeholder-gray-400 "
+          />
+          <input
+            type="text"
+            name="state"
+            placeholder="State"
+            value={filters.state}
+            onChange={handleChange}
+            className="w-full bg-transparent outline-none text-sm placeholder-gray-400 "
+          />
+          <input
+            type="text"
+            name="country"
+            placeholder="Country"
+            value={filters.country}
             onChange={handleChange}
             className="w-full bg-transparent outline-none text-sm placeholder-gray-400 "
           />
@@ -71,7 +87,7 @@ const SearchBar = ({
             onChange={handleChange}
             className="appearance-none bg-transparent outline-none text-sm pr-5 cursor-pointer"
           >
-            <option value="" className="">Type</option>
+            <option value="">Type</option>
             <option value="apartment">Apartment</option>
             <option value="villa">Villa</option>
             <option value="house">House</option>
