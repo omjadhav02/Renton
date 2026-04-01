@@ -23,6 +23,10 @@ export const useProperties = () => {
         }
     }
 
+     useEffect(() =>{
+        fetchAll();
+    },[]);
+
     const handleSearch = async (filters) => {
         try {
             setLoading(true);
@@ -42,11 +46,7 @@ export const useProperties = () => {
         } finally {
             setLoading(false);
         }
-    }
-
-    useEffect(() =>{
-        fetchAll();
-    },[]);
+    }  
 
     return { properties, loading, handleSearch, error};
 }

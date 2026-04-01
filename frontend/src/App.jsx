@@ -14,6 +14,7 @@ import Settings from "./pages/Settings";
 import MyProperties from "./pages/Owner/MyProperties";
 import Requests from "./pages/Owner/Requests";
 import ScrollToTop from "./components/ScrollToTop";
+import Favorites from "./pages/Tenant/Favorites";
 
 
 function App() {
@@ -32,6 +33,12 @@ function App() {
         <Route path="/my-bookings" element={<ProtectedRoute role="tenant">
           <MyBookings/>
           </ProtectedRoute>}/>
+        <Route path="/favorites" 
+        element={
+          <ProtectedRoute role="tenant">
+            <Favorites/>
+          </ProtectedRoute>}
+        />
 
 
         <Route path="/owner/my-properties" element={<ProtectedRoute role="owner">

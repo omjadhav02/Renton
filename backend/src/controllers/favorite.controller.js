@@ -37,7 +37,11 @@ export const getFavorites = async (req, res) => {
             userId: req.user.userId
             },
             include: {
-            property: true
+            property: {
+              include:{
+                images: true
+              }
+            }
             }
         });
     
@@ -52,8 +56,12 @@ export const removeFavorite = async (req, res) => {
  try {
     const { id } = req.params;
 
-    await prisma.favorite.delete({
-        where: { id }
+    await prisma.favorite.deleteMany({
+        where: {
+          userId: req.user.userId,
+          propertyId: id
+        }
+
     });
 
     res.json({
