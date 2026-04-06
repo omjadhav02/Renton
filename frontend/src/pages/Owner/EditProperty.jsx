@@ -21,7 +21,7 @@ function EditProperty() {
   if (loading) return <p className="p-6">Loading...</p>;
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="w-full mx-auto px-6 py-10">
 
       <h1 className="text-4xl font-bold mb-2 text-gray-800">
         Edit Property

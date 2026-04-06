@@ -20,7 +20,7 @@ function Hero({ onSearch }) {
 
         {/* Sticky Wrapper */}
         <div
-          className={`transition-all duration-300`}
+          className={`transition-all duration-300 `}
             
         >
           {/* Search Card */}

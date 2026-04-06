@@ -8,7 +8,7 @@ const Requests = () => {
   const { openChat, isOpen, chatUser, closeChat } = useChat();
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 min-h-screen bg-gray-50">
+    <div className="w-full mx-auto px-6 py-10 min-h-screen bg-gray-50">
 
       {/* HEADER */}
       <div className="mb-10">

@@ -51,7 +51,7 @@ const GeneralSettings = () => {
     }
 
     return (
-  <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
+  <div className="w-full w-full bg-white rounded-2xl shadow-lg p-8 m-1">
 
     {/* Header */}
     <h1 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">

@@ -24,7 +24,7 @@ export const useRequests = () => {
     const updateStatus = async (id, status) => {
         try {
             await updateBookingStatus(id, status);
-            toast.success(`Booking${status}`);
+            toast.success(`Booking ${status}`);
             fetchBookingRequests();
 
         } catch (error) {

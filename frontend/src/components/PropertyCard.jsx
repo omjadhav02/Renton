@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function PropertyCard({ property, Fav }) {
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
   
   const isFav = Fav.favIds.includes(property.id)
 
@@ -44,6 +44,7 @@ function PropertyCard({ property, Fav }) {
           )}
           
         </button>
+        
 
         {/* Price Badge */}
         <div className="absolute bottom-3 left-3 bg-white px-3 py-1 rounded-full text-sm font-semibold shadow">

@@ -4,6 +4,10 @@ export const createProperty = async (req, res) => {
   try {
     const { title, description, price, city, address, propertyType, bedrooms, bathrooms, state, postCode, country, deposit } = req.body;
 
+    if(!title || !description || !price || !city || !address || !propertyType || !bedrooms || !bathrooms || !state || !postCode || !country || !deposit) {
+      return res.status(400).json({message: "All fields required!"})
+    }
+
     const property = await prisma.property.create({
         data: {
             title,

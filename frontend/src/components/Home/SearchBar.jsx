@@ -17,7 +17,7 @@ const SearchBar = ({
   setPrice,
 }) => {
   return (
-    <div className="w-full flex justify-center mt-6">
+    <div className="w-full justify-center mt-6">
       <div className="flex items-center bg-gradient-to-r from-white to-indigo-50 shadow-xl rounded-full border border-indigo-100 px-3 py-2 w-full max-w-6xl">
 
         {/* LOCATION */}

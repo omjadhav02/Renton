@@ -47,7 +47,7 @@ function AddProperty() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="w-full mx-auto px-6 py-10">
 
       {/* Title */}
       <h1 className="text-4xl font-bold mb-2 text-gray-800">

@@ -9,7 +9,7 @@ import { IoMenu, IoClose } from "react-icons/io5";
 
 function Navbar() {
 
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
   const navigate = useNavigate();
 
   const [mobileOpen, setMobileOpen] = useState(false);
