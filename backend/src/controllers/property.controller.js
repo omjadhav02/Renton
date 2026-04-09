@@ -78,6 +78,30 @@ export const getProperties = async (req,res)=>{
     }
 }
 
+export const getOwnerProperties = async (req, res) => {
+    try {
+      const ownerId = req.user.userId;
+
+      const properties = await prisma.property.findMany({
+        where:{
+          ownerId: ownerId
+        },
+        include: {
+          images: true,
+          reviews: true,
+        },
+        orderBy: {
+          createdAt: "desc"
+        }
+      })
+
+      res.json(properties);
+
+    } catch (error) {
+      res.status(500).json({error: error.message});
+    }
+}
+
 export const getPropertyById = async (req, res)=>{
     try {
         const { id } = req.params;

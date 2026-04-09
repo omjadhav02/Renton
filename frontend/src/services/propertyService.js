@@ -11,6 +11,16 @@ export const getAllProperties = async () => {
     
 }
 
+export const getMyProperties = async () => {
+    try {
+        const res = await axiosInstance.get("/properties/my");
+
+        return res.data;
+    } catch (error) {
+        throw error.response?.data?.message || "Failed to fetch owner properties";
+    }
+}
+
 export const searchProperties = async(filters) => {
     const res = await axiosInstance.get("/properties/search",{
         params: filters,

@@ -17,6 +17,8 @@ import Favorites from "./pages/Tenant/Favorites";
 import MainLayout from "./layouts/MainLayout";
 import DashBoard from "./pages/Owner/DashBoard";
 import Settings from "./pages/Settings";
+import Transactions from "./pages/Owner/Transactions";
+import Bot from "./pages/Bot";
 
 function App() {
   return (
@@ -99,10 +101,27 @@ function App() {
             />
 
             <Route
+              path="/owner/transactions"
+              element={
+                <ProtectedRoute role="owner">
+                  <Transactions />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
               path="/settings"
               element={
                 <ProtectedRoute>
                   <Settings/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/bot"
+              element={
+                <ProtectedRoute>
+                  <Bot/>
                 </ProtectedRoute>
               }
             />

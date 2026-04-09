@@ -5,11 +5,13 @@ import {
   IoLogOutOutline,
 } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
-import { MdOutlineAddHome } from "react-icons/md";
+import { MdOutlineAddHome, MdOutlineMonetizationOn } from "react-icons/md";
 import { GiIsland } from "react-icons/gi";
 import { TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarRightCollapseFilled } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import { iconSize } from "../../../themes/icon"
+import { BsStars } from "react-icons/bs";
+
 
 const SideBar = ({ onLogout, collapsed, setCollapsed }) => {
   const location = useLocation();
@@ -20,6 +22,8 @@ const SideBar = ({ onLogout, collapsed, setCollapsed }) => {
     { name: "My Properties", icon: <GiIsland size={iconSize}/>, path: "/owner/my-properties" },
     { name: "Requests", icon: <IoNotificationsOutline size={iconSize}/>, path: "/owner/requests" },
     { name: "Add Property", icon: <MdOutlineAddHome size={iconSize}/>, path: "/owner/create-property" },
+    { name: "Transactions", icon: <MdOutlineMonetizationOn size={iconSize}/>, path: "/owner/transactions" },
+    { name: "Ask AI", icon: <BsStars size={iconSize} />, path: "/bot" },
   ];
 
   return (
@@ -32,10 +36,14 @@ const SideBar = ({ onLogout, collapsed, setCollapsed }) => {
         className="p-4 cursor-pointer text-gray-700 "
         onClick={() => setCollapsed(!collapsed)}
       >
-        {collapsed ? <TbLayoutSidebarRightCollapseFilled size={iconSize}/> : (
+        {collapsed ? <TbLayoutSidebarRightCollapseFilled size={30}/> : (
             <div className="flex justify-between items-center">
-                <div className="">Renton</div>
-                <div><TbLayoutSidebarLeftCollapseFilled size={iconSize}/></div>
+                <Link to="/" className="flex flex-col items-start">
+                  <span className="text-xl md:text-2xl font-bold text-blue-600 leading-tight">
+                    Renton
+                  </span>
+                </Link>
+                <div><TbLayoutSidebarLeftCollapseFilled size={30}/></div>
             </div>
         )}
       </div>
@@ -71,7 +79,7 @@ const SideBar = ({ onLogout, collapsed, setCollapsed }) => {
 
           <div
             onClick={onLogout}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 cursor-pointer text-red-500"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-500 cursor-pointer text-red-500 hover:text-white"
           >
             <IoLogOutOutline size={iconSize}/>
             {!collapsed && <span>Logout</span>}
