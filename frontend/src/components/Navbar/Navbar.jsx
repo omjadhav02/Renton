@@ -9,7 +9,7 @@ import { IoMenu, IoClose } from "react-icons/io5";
 
 function Navbar() {
 
-  const { user, logout, loading } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -21,40 +21,50 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
+    <nav className="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/70 border-b border-slate-800/60">
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex justify-between items-center">
+      {/* subtle gradient glow */}
+      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-emerald-500/5 pointer-events-none"></div>
 
-        {/* Brand */}
-        <Link to="/" className="flex flex-col">
-          <span className="text-2xl md:text-4xl font-bold text-blue-600">
-            Renton
+      <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+
+        {/* BRAND */}
+        <Link to="/" className="group flex flex-col leading-tight">
+
+          <span className="text-2xl md:text-3xl font-semibold tracking-tight text-white group-hover:text-emerald-400 transition">
+            VerdeStay
           </span>
-          <span className="text-xs md:text-xl text-gray-500">
-            Find. Book. Move In.
+
+          <span className="text-[11px] md:text-xs text-slate-400 group-hover:text-emerald-300 transition">
+            Live Better. Stay Smarter.
           </span>
+
         </Link>
 
-        {/* Desktop */}
-        <DesktopMenu user={user} onLogout={handleLogout} />
+        {/* DESKTOP MENU */}
+        <div className="hidden md:flex items-center gap-6">
+          <DesktopMenu user={user} onLogout={handleLogout} />
+        </div>
 
-        {/* Mobile Toggle */}
+        {/* MOBILE BUTTON */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden"
+          className="md:hidden text-white hover:text-emerald-400 transition"
         >
           {mobileOpen ? <IoClose size={28}/> : <IoMenu size={28}/>}
         </button>
 
       </div>
 
-      {/* Mobile */}
+      {/* MOBILE MENU */}
       {mobileOpen && (
-        <MobileMenu
-          user={user}
-          onLogout={handleLogout}
-          closeMenu={() => setMobileOpen(false)}
-        />
+        <div className="border-t border-slate-800/60 bg-slate-950/95 backdrop-blur-xl">
+          <MobileMenu
+            user={user}
+            onLogout={handleLogout}
+            closeMenu={() => setMobileOpen(false)}
+          />
+        </div>
       )}
 
     </nav>

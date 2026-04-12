@@ -14,19 +14,19 @@ import ProfileDropdown from "./ProfileDropdown";
 function DesktopMenu({ user, onLogout }) {
 
   return (
-    <div className="hidden md:flex items-center gap-6 text-gray-700 font-medium">
+    <div className="hidden md:flex items-center gap-6 text-slate-300 font-medium">
 
-      <Link to="/" className="hover:text-blue-600">
+      <Link to="/" className="hover:text-emerald-400 transition">
         <IoHomeOutline size={24}/>
       </Link>
 
       {user && user.role === "tenant" && (
         <>
-          <Link to="/favorites" className="flex gap-1 hover:text-blue-600">
+          <Link to="/favorites" className="flex items-center gap-1 hover:text-emerald-400 transition">
             <IoHeartOutline/> Favorites
           </Link>
 
-          <Link to="/my-bookings" className="flex gap-1 hover:text-blue-600">
+          <Link to="/my-bookings" className="flex items-center gap-1 hover:text-emerald-400 transition">
             <IoCalendarOutline/> My Bookings
           </Link>
         </>
@@ -36,16 +36,16 @@ function DesktopMenu({ user, onLogout }) {
         <>
           <Link
             to="/owner/create-property"
-            className="flex gap-1 bg-blue-600 text-white px-4 py-2 rounded-lg"
+            className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl shadow-md transition"
           >
             <IoAdd/> Add Property
           </Link>
 
-          <Link to="/owner/my-properties" className="flex gap-1 hover:text-blue-600">
+          <Link to="/owner/my-properties" className="flex items-center gap-1 hover:text-emerald-400 transition">
             <IoBusinessOutline/> My Properties
           </Link>
 
-          <Link to="/owner/requests" className="flex gap-1 hover:text-blue-600">
+          <Link to="/owner/requests" className="flex items-center gap-1 hover:text-emerald-400 transition">
             <IoCalendarOutline/> Requests
           </Link>
         </>
@@ -53,18 +53,18 @@ function DesktopMenu({ user, onLogout }) {
 
       {!user ? (
         <>
-          <Link to="/login" className="flex gap-1">
-            <IoLogInOutline size={26} /> Login
+          <Link to="/login" className="flex items-center gap-1 hover:text-emerald-400 transition">
+            <IoLogInOutline size={22} /> Login
           </Link>
 
-          <Link to="/register" className="bg-blue-600 text-white px-4 py-2 rounded-lg flex gap-1">
-            <IoPersonAddOutline size={20}/> Register
+          <Link to="/register" className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl flex items-center gap-1 shadow-md transition">
+            <IoPersonAddOutline size={18}/> Register
           </Link>
         </>
       ) : (
         <div className="flex items-center gap-3">
 
-          <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+          <span className="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded-md border border-emerald-500/20">
             {user.role === "owner" ? "Owner" : "Tenant"}
           </span>
 

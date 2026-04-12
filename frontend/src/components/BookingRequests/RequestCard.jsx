@@ -46,52 +46,53 @@ const RequestCard = ({ request, onApprove, onReject, onChat, onDelete }) => {
   const status = getStatusConfig(request.status);
 
   return (
-    <div className="flex gap-5 backdrop-blur-xl bg-white/70 border border-white/40 p-5 rounded-3xl shadow-sm hover:shadow-md transition">
+    <div className="flex gap-5 bg-slate-900 border border-slate-800 p-5 rounded-2xl hover:border-emerald-500/30 transition">
 
-      {/* IMAGE */}
-      <img
-        src={image}
-        alt="property"
-        className="w-32 h-24 object-cover rounded-2xl"
-      />
+  {/* IMAGE */}
+  <img
+    src={image}
+    alt="property"
+    className="w-32 h-24 object-cover rounded-xl"
+  />
 
-      <div className="flex-1 space-y-4">
+  <div className="flex-1 space-y-4">
 
-        {/* TOP */}
-        <div className="flex justify-between items-start">
+    {/* TOP */}
+    <div className="flex justify-between items-start">
 
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900">
-              {property.title}
-            </h2>
+      <div>
+        <h2 className="text-lg font-semibold text-white">
+          {property.title}
+        </h2>
 
-            <p className="text-gray-500 text-sm mt-1">
-              Tenant: <span className="text-gray-700 font-medium">{tenant.name}</span>
-            </p>
-          </div>
-
-          <span className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${status.style}`}>
-            {status.icon}
-            {request.status}
-          </span>
-
-        </div>
-
-        {/* DATES */}
-        <div className="text-sm text-gray-500 flex items-center gap-2">
-          <IoCalendarOutline size={16} />
-          {new Date(request.startDate).toLocaleDateString()} →
-          {new Date(request.endDate).toLocaleDateString()}
-        </div>
-
-        {/* PROPERTY INFO */}
-        <PropertyInfo property={property} />
-
-        {/* ACTIONS */}
-        <Actions info={info} />
-
+        <p className="text-slate-400 text-sm mt-1">
+          Tenant: <span className="text-white font-medium">{tenant.name}</span>
+        </p>
       </div>
+
+      <span className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${status.style}`}>
+        {status.icon}
+        {request.status}
+      </span>
+
     </div>
+
+    {/* DATES */}
+    <div className="text-sm text-slate-400 flex items-center gap-2">
+      <IoCalendarOutline size={16} />
+      {new Date(request.startDate).toLocaleDateString()} →
+      {new Date(request.endDate).toLocaleDateString()}
+    </div>
+
+    {/* INFO */}
+    <PropertyInfo property={property} />
+
+    {/* ACTIONS */}
+    <Actions info={info} />
+
+  </div>
+
+</div>
   );
 };
 

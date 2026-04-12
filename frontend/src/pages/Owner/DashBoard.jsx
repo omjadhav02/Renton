@@ -10,26 +10,35 @@ import { useDashBoard } from "../../hooks/useDashBoard";
 
 const DashBoard = () => {
   
-  const { stats, properties, requests, setRequests} = useDashBoard();
+  const { stats, properties, requests, setRequests } = useDashBoard();
   const { openChat, isOpen, chatUser, closeChat } = useChat();
 
   return (
-    <div className="p-6 w-full mx-auto">
+    <div className="w-full mx-auto space-y-8">
 
-      <h1 className="text-2xl font-bold mb-6">
-        Dashboard
-      </h1>
+      <div>
+        <h1 className="text-2xl font-semibold text-white tracking-tight">
+          Dashboard
+        </h1>
+        <p className="text-slate-400 text-sm">
+          Overview of your properties and activity
+        </p>
+      </div>
 
-      {/* 🔹 Stats */}
+      {/* Stats */}
       <StatsGrid stats={stats} />
 
-      {/* 🔹 Requests */}
-      <RequestsTable requests={requests} setRequests={setRequests} onChat={openChat}/>
+      {/* Requests */}
+      <RequestsTable
+        requests={requests}
+        setRequests={setRequests}
+        onChat={openChat}
+      />
 
-      {/* 🔹 Properties */}
+      {/* Properties */}
       <PropertiesGrid properties={properties} />
 
-      {/* 🔹 Quick Actions */}
+      {/* Quick Actions */}
       <QuickActions />
 
       <ChatDrawer

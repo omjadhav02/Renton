@@ -8,6 +8,7 @@ import reviewRoutes from "./routes/review.route.js"
 import favoriteRoutes from "./routes/favorite.route.js"
 import chatRoutes from "./routes/chat.route.js"
 import uploadRoutes from "./routes/upload.route.js"
+import paymentRoutes from "./routes/payment.route.js"
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use("/api/reviews", reviewRoutes)
 app.use("/api/favorites", favoriteRoutes)
 app.use("/api/chats", chatRoutes)
 app.use("/api/upload", uploadRoutes)
+app.use("/api/payments", paymentRoutes)
 
 
 export default app;

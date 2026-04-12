@@ -2,30 +2,42 @@ import { useSearchProperty } from "../../hooks/useSearchProperty";
 import SearchBar from "./SearchBar";
 
 function Hero({ onSearch }) {
-  const { price, setPrice, filters, setFilters, handleChange, handleSearch, bhkOptions } = useSearchProperty(onSearch);
+  const {
+    price,
+    setPrice,
+    filters,
+    setFilters,
+    handleChange,
+    handleSearch,
+    bhkOptions,
+  } = useSearchProperty(onSearch);
 
   return (
-    <section className="bg-gradient-to-br from-blue-50 via-white to-indigo-100 py-20 px-6">
+    <section className="relative py-24 px-6 bg-slate-950 overflow-hidden">
 
-      <div className="max-w-6xl mx-auto text-center">
+      {/* subtle glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent"></div>
 
-        {/* Heading */}
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-          Find Your Perfect Home
+      <div className="relative max-w-6xl mx-auto text-center">
+
+        <h1 className="text-4xl md:text-6xl font-semibold text-white mb-6 tracking-tight">
+          A smarter way to discover your home.
         </h1>
 
-        <p className="text-gray-500 mb-10 text-lg">
-          Search apartments, villas, and houses effortlessly
-        </p>
+        <p className="text-slate-400 mb-12 text-lg max-w-2xl mx-auto leading-relaxed">
+  Effortlessly explore premium homes, connect with verified owners, and move in with confidence.
+</p>
 
-        {/* Sticky Wrapper */}
-        <div
-          className={`transition-all duration-300 `}
-            
-        >
-          {/* Search Card */}
-          <SearchBar handleChange={handleChange} handleSearch={handleSearch} filters={filters} price={price} bhkOptions={bhkOptions} setFilters={setFilters} setPrice={setPrice}/>
-        </div>
+        {/* Search */}
+        <SearchBar
+          handleChange={handleChange}
+          handleSearch={handleSearch}
+          filters={filters}
+          price={price}
+          bhkOptions={bhkOptions}
+          setFilters={setFilters}
+          setPrice={setPrice}
+        />
 
       </div>
     </section>

@@ -1,7 +1,45 @@
-import { IoCallOutline, IoChatbubbleEllipsesOutline, IoMailOutline, IoMailSharp, IoSendSharp, IoTrash } from "react-icons/io5";
-
+import { IoCallOutline, IoCardSharp, IoChatbubbleEllipsesOutline, IoMailOutline, IoSendSharp, IoTrash } from "react-icons/io5";
+import { createOrder, verifyPayments } from "../../features/payments/services/payment.service";
+import toast from "react-hot-toast"
+import { useState } from "react";
 
 const Actions = ({booking, owner, onDelete, onChat }) => {
+
+    const [loading, setLoading] = useState(false);
+
+    const handlePay = async () => {
+        setLoading(true);
+        try {
+            const data = await createOrder({bookingId: booking.id});
+        
+
+            const options = {
+                key: import.meta.env.VITE_RAZORPAY_KEY,
+                amount: data.amount * 100,
+                order_id: data.orderId,
+
+                handler: async (response) => {
+                    await verifyPayments({ ...response,bookingId: booking.id })
+
+                    toast.success("Payment successful!")
+                }
+            }
+
+            const rzp = new window.Razorpay(options);
+
+            rzp.on("payment.failed", function (response) {
+                toast.error("Payment failed ❌");
+                console.error(response.error);
+            });
+
+            rzp.open();
+        } catch (error) {
+            console.log(error)
+            toast.error(error?.response?.data?.message || error.message);
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <div className="mt-4 space-y-4">
@@ -46,7 +84,7 @@ const Actions = ({booking, owner, onDelete, onChat }) => {
                         Email Actions
                     </p>
                     <div className="flex gap-3 flex-wrap">
-                        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-100 text-blue-700 font-medium hover:bg-blue-200 transition">
+                        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-100 text-blue-700 font-medium hover:bg-blue-200 transition" >
                                     <IoSendSharp/>
                                     Mail Owner 
                         </button>
@@ -65,6 +103,16 @@ const Actions = ({booking, owner, onDelete, onChat }) => {
                     >
                         <IoChatbubbleEllipsesOutline />
                         Chat
+                    </button>
+                </div>
+
+                <div>
+                    <p className="text-xs text-gray-400 mb-2 font-medium">
+                        Payments
+                    </p>
+                    <button onClick={handlePay}
+                    className="p-3 rounded-full flex items-center gap-2 bg-green-600 text-white cursor-pointer shadow hover:shadow-lg hover:bg-green-500" disabled={loading}>
+                        {loading ? "Processing..." : "Proceed to Payment"}<IoCardSharp size={22}/>
                     </button>
                 </div>
 

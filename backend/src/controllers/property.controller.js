@@ -1,4 +1,5 @@
 import prisma from "../config/prisma.js"
+import { getCoordinates } from "../services/geocoding.service.js";
 
 export const createProperty = async (req, res) => {
   try {
@@ -7,6 +8,10 @@ export const createProperty = async (req, res) => {
     if(!title || !description || !price || !city || !address || !propertyType || !bedrooms || !bathrooms || !state || !postCode || !country || !deposit) {
       return res.status(400).json({message: "All fields required!"})
     }
+
+    const fullAddress = `${address}, ${city}, ${state}, ${country}`;
+
+    const { latitude, longitude } = await getCoordinates(fullAddress);
 
     const property = await prisma.property.create({
         data: {
@@ -23,6 +28,8 @@ export const createProperty = async (req, res) => {
             bedrooms: Number(bedrooms),
             bathrooms: Number(bathrooms),
             ownerId: req.user.userId,
+            latitude,
+            longitude
         }
     })
 
@@ -235,6 +242,23 @@ export const updateProperty = async (req, res) => {
     if (req.body.deposit) data.deposit = Number(req.body.deposit);
     if (req.body.bedrooms) data.bedrooms = Number(req.body.bedrooms);
     if (req.body.bathrooms) data.bathrooms = Number(req.body.bathrooms);
+
+    if (
+      req.body.address ||
+      req.body.city ||
+      req.body.state ||
+      req.body.country
+    ) {
+      const fullAddress = `${req.body.address || property.address}, 
+        ${req.body.city || property.city}, 
+        ${req.body.state || property.state}, 
+        ${req.body.country || property.country}`;
+
+      const { latitude, longitude } = await getCoordinates(fullAddress);
+
+      data.latitude = latitude;
+      data.longitude = longitude;
+    }
 
     const updated = await prisma.property.update({
       where: { id },

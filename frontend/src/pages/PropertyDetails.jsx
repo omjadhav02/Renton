@@ -5,6 +5,8 @@ import BookingCard from "../components/PropertyDetails/BookingCard";
 import ImageModal from "../components/PropertyDetails/ImageModal";
 import ReviewsSection from "../components/Reviews/ReviewsSection";
 import { usePropertyDetails } from "../hooks/usePropertyDetails";
+import { useProperties } from "../hooks/useProperties";
+import MapView from "../features/map/components/MapView";
 
 function PropertyDetails() {
     const {
@@ -15,6 +17,7 @@ function PropertyDetails() {
         showModal,
         setShowModal
     } = usePropertyDetails();
+    const { properties } = useProperties();
 
     if (!property) {
         return (
@@ -57,6 +60,10 @@ function PropertyDetails() {
                     setShowModal={setShowModal}
                 />
             )}
+
+            <div>
+                <MapView properties={properties} />
+            </div>
 
             <div className="mt-12">
                 <ReviewsSection propertyId={property.id} />

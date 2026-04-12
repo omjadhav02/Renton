@@ -26,10 +26,11 @@ model User {
   reviews    Review[]
   messages   ChatMessage[]
   favorites  Favorite[]
+  request    Request[]
 }
 
 model Property {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   title       String
   description String
   price       Float
@@ -39,17 +40,22 @@ model Property {
   state       String?
   country     String?
   postCode    String?
-  propertyType String
-  bedrooms    Int
-  bathrooms   Int
-  ownerId     String
-  createdAt   DateTime @default(now())
 
-  owner       User @relation(fields: [ownerId], references: [id])
-  images      PropertyImage[]
-  bookings    Booking[]
-  reviews     Review[]
-  favorites   Favorite[]
+  latitude  Float?
+  longitude Float?
+
+  propertyType String
+  bedrooms     Int
+  bathrooms    Int
+  ownerId      String
+  createdAt    DateTime @default(now())
+
+  owner     User            @relation(fields: [ownerId], references: [id])
+  images    PropertyImage[]
+  bookings  Booking[]
+  reviews   Review[]
+  favorites Favorite[]
+  request   Request[]
 }
 
 model PropertyImage {
@@ -57,45 +63,48 @@ model PropertyImage {
   imageUrl   String
   propertyId String
 
-  property   Property @relation(fields: [propertyId], references: [id])
+  property Property @relation(fields: [propertyId], references: [id])
 }
 
 model Booking {
-  id         String   @id @default(uuid())
+  id         String        @id @default(uuid())
   propertyId String
   tenantId   String
   status     BookingStatus
   startDate  DateTime
   endDate    DateTime
-  createdAt  DateTime @default(now())
+  createdAt  DateTime      @default(now())
 
-  property   Property @relation(fields: [propertyId], references: [id])
-  tenant     User     @relation(fields: [tenantId], references: [id])
-  payment    Payment?
+  property Property @relation(fields: [propertyId], references: [id])
+  tenant   User     @relation(fields: [tenantId], references: [id])
+  payment  Payment?
 }
 
 model Request {
-  id         String   @id @default(uuid())
+  id         String        @id @default(uuid())
   propertyId String
   tenantId   String
   status     BookingStatus
   startDate  DateTime
   endDate    DateTime
-  createdAt  DateTime @default(now())
+  createdAt  DateTime      @default(now())
 
-  property   Property @relation(fields: [propertyId], references: [id])
-  tenant     User     @relation(fields: [tenantId], references: [id])
-  payment    Payment?
+  property Property @relation(fields: [propertyId], references: [id])
+  tenant   User     @relation(fields: [tenantId], references: [id])
 }
 
 model Payment {
-  id         String   @id @default(uuid())
-  bookingId  String   @unique
-  amount     Float
-  status     String
-  createdAt  DateTime @default(now())
+  id        String   @id @default(uuid())
+  bookingId String   @unique
+  amount    Float
+  status    String
 
-  booking    Booking @relation(fields: [bookingId], references: [id])
+  razorpayOrderId    String?
+  razorpayPaymentId  String?
+
+  createdAt DateTime @default(now())
+
+  booking Booking @relation(fields: [bookingId], references: [id])
 }
 
 model Review {
@@ -106,8 +115,8 @@ model Review {
   tenantId   String
   createdAt  DateTime @default(now())
 
-  property   Property @relation(fields: [propertyId], references: [id])
-  tenant     User     @relation(fields: [tenantId], references: [id])
+  property Property @relation(fields: [propertyId], references: [id])
+  tenant   User     @relation(fields: [tenantId], references: [id])
 }
 
 model Favorite {
@@ -115,8 +124,8 @@ model Favorite {
   userId     String
   propertyId String
 
-  user       User     @relation(fields: [userId], references: [id])
-  property   Property @relation(fields: [propertyId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+  property Property @relation(fields: [propertyId], references: [id])
 }
 
 model ChatMessage {
@@ -124,10 +133,10 @@ model ChatMessage {
   senderId   String
   receiverId String
   message    String
-  seen       Boolean @default(false)
+  seen       Boolean  @default(false)
   createdAt  DateTime @default(now())
 
-  sender     User @relation(fields: [senderId], references: [id])
+  sender User @relation(fields: [senderId], references: [id])
 }
 
 enum Role {

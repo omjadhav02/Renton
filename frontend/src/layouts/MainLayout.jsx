@@ -7,24 +7,26 @@ import OwnerLayout from "./OwnerLayout";
 const MainLayout = () => {
   const { user, logout, loading } = useAuth();
 
-  if (loading) return null; // or loader
+  if (loading) return null;
 
   // 🏠 OWNER VIEW
   if (user?.role === "owner") {
     return (
-        <>
-          <OwnerLayout logout={logout}/>
-        </>
+      <>
+        <OwnerLayout logout={logout}/>
+      </>
     );
   }
 
   // 🌍 TENANT / PUBLIC VIEW
   return (
-    <>
+    <div className="bg-slate-950 min-h-screen flex flex-col">
       <Navbar />
-      <Outlet />
+      <main className="flex-1">
+        <Outlet />
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

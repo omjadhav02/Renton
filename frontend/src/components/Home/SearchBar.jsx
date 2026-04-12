@@ -17,43 +17,53 @@ const SearchBar = ({
   setPrice,
 }) => {
   return (
-    <div className="w-full justify-center mt-6">
-      <div className="flex items-center bg-gradient-to-r from-white to-indigo-50 shadow-xl rounded-full border border-indigo-100 px-3 py-2 w-full max-w-6xl">
+    <div className="w-full flex justify-center px-2">
+
+      <div className="
+        w-full max-w-6xl
+        bg-slate-900 border border-slate-800
+        rounded-2xl shadow-2xl
+        p-4
+        flex flex-col lg:flex-row
+        gap-3
+      ">
 
         {/* LOCATION */}
-        <div className="flex items-center gap-2 px-4 flex-1 group">
-          <IoLocationOutline className="text-indigo-500 group-hover:scale-110 transition" size={50} />
+        <div className="flex flex-col sm:flex-row gap-2 flex-1">
+
           <input
             type="text"
             name="city"
             placeholder="City"
             value={filters.city}
             onChange={handleChange}
-            className="w-full bg-transparent outline-none text-sm placeholder-gray-400 "
+            className="w-full min-w-0 bg-slate-800 text-white px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
           />
+
           <input
             type="text"
             name="state"
             placeholder="State"
             value={filters.state}
             onChange={handleChange}
-            className="w-full bg-transparent outline-none text-sm placeholder-gray-400 "
+            className="w-full min-w-0 bg-slate-800 text-white px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
           />
+
           <input
             type="text"
             name="country"
             placeholder="Country"
             value={filters.country}
             onChange={handleChange}
-            className="w-full bg-transparent outline-none text-sm placeholder-gray-400 "
+            className="w-full min-w-0 bg-slate-800 text-white px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
           />
+
         </div>
 
-        <div className="h-6 w-px bg-gray-200" />
+        {/* FILTERS */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex gap-3">
 
-        {/* BHK */}
-        <div className="relative flex items-center gap-2 px-4 group">
-          <IoBedOutline className="text-indigo-500" size={18} />
+          {/* BHK */}
           <select
             value={filters.bedrooms}
             onChange={(e) =>
@@ -62,7 +72,7 @@ const SearchBar = ({
                 bedrooms: e.target.value,
               }))
             }
-            className="appearance-none bg-transparent outline-none text-sm pr-5 cursor-pointer"
+            className="w-full bg-slate-800 text-white px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
           >
             <option value="">BHK</option>
             {bhkOptions.map((num) => (
@@ -72,20 +82,12 @@ const SearchBar = ({
             ))}
           </select>
 
-          {/* Custom Arrow */}
-          <IoChevronDown className="absolute right-2 text-gray-400 pointer-events-none group-hover:text-indigo-500 transition" size={14} />
-        </div>
-
-        <div className="h-6 w-px bg-gray-200" />
-
-        {/* PROPERTY TYPE */}
-        <div className="relative flex items-center gap-2 px-4 group">
-          <IoHomeOutline className="text-indigo-500" size={18} />
+          {/* TYPE */}
           <select
             name="propertyType"
             value={filters.propertyType}
             onChange={handleChange}
-            className="appearance-none bg-transparent outline-none text-sm pr-5 cursor-pointer"
+            className="w-full bg-slate-800 text-white px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
           >
             <option value="">Type</option>
             <option value="apartment">Apartment</option>
@@ -94,21 +96,14 @@ const SearchBar = ({
             <option value="studio">Studio</option>
           </select>
 
-          <IoChevronDown className="absolute right-2 text-gray-400 pointer-events-none group-hover:text-indigo-500 transition" size={14} />
-        </div>
-
-        <div className="h-6 w-px bg-gray-200" />
-
-        {/* BUDGET */}
-        <div className="relative flex items-center gap-2 px-4 group">
-          <IoCashOutline className="text-indigo-500" size={18} />
+          {/* PRICE */}
           <select
             value={`${price[0]}-${price[1]}`}
             onChange={(e) => {
               const [min, max] = e.target.value.split("-").map(Number);
               setPrice([min, max]);
             }}
-            className="appearance-none bg-transparent outline-none text-sm pr-5 cursor-pointer"
+            className="w-full bg-slate-800 text-white px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
           >
             <option value="0-200000">Budget</option>
             <option value="0-10000">Below ₹10k</option>
@@ -118,17 +113,18 @@ const SearchBar = ({
             <option value="100000-200000">Above ₹1L</option>
           </select>
 
-          <IoChevronDown className="absolute right-2 text-gray-400 pointer-events-none group-hover:text-indigo-500 transition" size={14} />
         </div>
 
-        {/* SEARCH BUTTON */}
+        {/* BUTTON */}
         <button
           onClick={handleSearch}
-          className="ml-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-3 rounded-full shadow-md hover:scale-110 hover:shadow-lg transition"
+          className="w-full lg:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-xl font-medium shadow-lg transition"
         >
-          <IoSearchOutline size={20} />
+          Search
         </button>
+
       </div>
+
     </div>
   );
 };

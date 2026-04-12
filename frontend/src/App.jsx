@@ -20,6 +20,7 @@ import Settings from "./pages/Settings";
 import Transactions from "./pages/Owner/Transactions";
 import Bot from "./pages/Bot";
 
+
 function App() {
   return (
     <BrowserRouter>

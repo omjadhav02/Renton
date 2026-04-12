@@ -11,7 +11,7 @@ function OwnerPropertyCard({ property }) {
   return (
     <div
       onClick={handleClick}
-      className="cursor-pointer bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
+      className="cursor-pointer bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/30 transition group"
     >
 
       {/* Image */}
@@ -21,27 +21,28 @@ function OwnerPropertyCard({ property }) {
           "https://via.placeholder.com/400"
         }
         alt={property.title}
-        className="w-full h-48 object-cover"
+        className="w-full h-48 object-cover group-hover:scale-105 transition"
       />
 
       {/* Info */}
       <div className="p-4">
 
-        <h2 className="font-semibold text-lg">
+        <h2 className="font-semibold text-lg text-white line-clamp-1">
           {property.title}
         </h2>
 
-        <p className="text-gray-500 text-sm">
+        <p className="text-slate-400 text-sm">
           {property.city}
         </p>
 
-        <p className="text-gray-900 font-semibold mt-2">
+        <p className="text-emerald-400 font-semibold mt-2">
           ₹ {property.price}
-            <span className="text-gray-500 text-sm ml-1">
-                /month
-            </span>
+          <span className="text-slate-400 text-sm ml-1">
+            /month
+          </span>
         </p>
-        <p className="text-sm text-gray-500 mt-1">
+
+        <p className="text-xs text-slate-500 mt-2">
           {new Date(property.createdAt).toLocaleString("en-IN", {
             timeZone: "Asia/Kolkata",
             day: "2-digit",

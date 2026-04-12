@@ -1,9 +1,5 @@
 import {
-  IoCallOutline,
-  IoMailOutline,
-  IoChatbubbleEllipsesOutline,
   IoCalendarOutline,
-  IoTrash,
   IoCheckmarkCircleOutline,
   IoTimeOutline,
   IoCloseCircleOutline,
