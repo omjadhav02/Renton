@@ -16,38 +16,34 @@ const DashBoard = () => {
   return (
     <div className="w-full mx-auto space-y-8">
 
-      <div>
-        <h1 className="text-2xl font-semibold text-white tracking-tight">
-          Dashboard
-        </h1>
-        <p className="text-slate-400 text-sm">
-          Overview of your properties and activity
-        </p>
-      </div>
+  <div>
+    <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">
+      Dashboard
+    </h1>
+    <p className="text-slate-500 text-sm">
+      Overview of your properties and activity
+    </p>
+  </div>
 
-      {/* Stats */}
-      <StatsGrid stats={stats} />
+  <StatsGrid stats={stats} />
 
-      {/* Requests */}
-      <RequestsTable
-        requests={requests}
-        setRequests={setRequests}
-        onChat={openChat}
-      />
+  <RequestsTable
+    requests={requests}
+    setRequests={setRequests}
+    onChat={openChat}
+  />
 
-      {/* Properties */}
-      <PropertiesGrid properties={properties} />
+  <PropertiesGrid properties={properties} />
 
-      {/* Quick Actions */}
-      <QuickActions />
+  <QuickActions />
 
-      <ChatDrawer
-        isOpen={isOpen}
-        user={chatUser}
-        onClose={closeChat}
-      />
+  <ChatDrawer
+    isOpen={isOpen}
+    user={chatUser}
+    onClose={closeChat}
+  />
 
-    </div>
+</div>
   );
 };
 

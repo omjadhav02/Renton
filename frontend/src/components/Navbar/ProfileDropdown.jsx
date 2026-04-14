@@ -38,37 +38,30 @@ function ProfileDropdown({ user, onLogout }) {
   return (
     <div className="relative" ref={ref}>
       
-      {/* Trigger */}
       <button
-        onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center gap-2 bg-slate-900 border border-slate-700 px-3 py-2 rounded-xl hover:border-emerald-500/40 hover:bg-slate-800 transition"
-      >
-        <IoPersonCircleOutline size={22} className="text-slate-300"/>
-        <span className="text-sm text-slate-200">{user.name}</span>
-      </button>
+  onClick={() => setOpen((prev) => !prev)}
+  className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-2 rounded-xl hover:shadow-sm transition"
+>
+  <IoPersonCircleOutline size={22} className="text-slate-600"/>
+  <span className="text-sm text-slate-800">{user.name}</span>
+</button>
 
-      {/* Dropdown */}
-      {open && (
-        <div className="absolute right-0 mt-2 w-48 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl z-50 overflow-hidden backdrop-blur-xl">
+{open && (
+  <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg z-50">
 
-          <Link
-            to="/settings"
-            className="block px-4 py-2 hover:bg-slate-800 text-sm text-slate-300"
-          >
-            <IoSettingsOutline className="inline mr-2" />
-            Settings
-          </Link>
+    <Link to="/settings" className="block px-4 py-2 hover:bg-slate-50 text-sm">
+      Settings
+    </Link>
 
-          <button
-            onClick={onLogout}
-            className="w-full text-left px-4 py-2 text-red-500 hover:bg-slate-800 text-sm"
-          >
-            <IoLogOutOutline className="inline mr-2" />
-            Logout
-          </button>
+    <button
+      onClick={onLogout}
+      className="w-full text-left px-4 py-2 text-red-500 hover:bg-red-50 text-sm"
+    >
+      Logout
+    </button>
 
-        </div>
-      )}
+  </div>
+)}
     </div>
   );
 }

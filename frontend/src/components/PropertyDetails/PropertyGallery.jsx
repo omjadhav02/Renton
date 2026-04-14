@@ -6,7 +6,7 @@ function PropertyGallery({ images, currentImage, setCurrentImage, setShowModal }
                 <img
                     src={images[currentImage]}
                     onClick={() => setShowModal(true)}
-                    className="w-full h-[420px] object-cover rounded-xl cursor-pointer"
+                    className="w-full h-[420px] object-cover rounded-2xl cursor-pointer shadow-sm"
                 />
             </div>
 
@@ -16,8 +16,11 @@ function PropertyGallery({ images, currentImage, setCurrentImage, setShowModal }
                         key={index}
                         src={img}
                         onClick={() => setCurrentImage(index)}
-                        className={`h-48 w-full object-cover rounded-xl cursor-pointer
-                        ${currentImage === index ? "opacity-100" : "opacity-80 hover:opacity-100"}`}
+                        className={`h-48 w-full object-cover rounded-xl cursor-pointer border
+                        ${currentImage === index
+                            ? "border-indigo-500"
+                            : "border-slate-200 hover:border-indigo-400"
+                        }`}
                     />
                 ))}
             </div>

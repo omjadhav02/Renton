@@ -20,13 +20,13 @@ const MainLayout = () => {
 
   // 🌍 TENANT / PUBLIC VIEW
   return (
-    <div className="bg-slate-950 min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
+    <div className="bg-slate-50 min-h-screen flex flex-col">
+  <Navbar />
+  <main className="flex-1">
+    <Outlet />
+  </main>
+  <Footer />
+</div>
   );
 };
 

@@ -6,7 +6,7 @@ const PropertyCard = ({ property }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/30 transition group">
+<div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group">
 
   <img
     src={property.images?.[0]?.imageUrl || "https://via.placeholder.com/300"}
@@ -16,15 +16,15 @@ const PropertyCard = ({ property }) => {
 
   <div className="p-4">
 
-    <h3 className="font-semibold text-white text-lg truncate">
+    <h3 className="font-semibold text-slate-900 text-lg truncate">
       {property.title}
     </h3>
 
-    <p className="text-sm text-slate-400">
+    <p className="text-sm text-slate-500">
       {property.city}
     </p>
 
-    <p className="mt-2 font-medium text-emerald-400">
+    <p className="mt-2 font-semibold text-indigo-600">
       ₹{property.price}
     </p>
 
@@ -32,14 +32,14 @@ const PropertyCard = ({ property }) => {
 
       <button
         onClick={() => navigate(`/property/${property.id}`)}
-        className="text-slate-400 hover:text-emerald-400 transition"
+        className="text-slate-500 hover:text-indigo-600"
       >
         <IoOpenOutline size={22}/>
       </button>
 
       <button
         onClick={() => navigate(`/owner/edit-property/${property.id}`)}
-        className="text-slate-400 hover:text-emerald-400 transition"
+        className="text-slate-500 hover:text-indigo-600"
       >
         <IoPencilOutline size={22}/>
       </button>

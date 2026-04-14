@@ -1,4 +1,4 @@
-import { IoHeart, IoHeartOutline, IoMoveOutline, IoOpenOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline, IoOpenOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 function PropertyCard({ property, Fav }) {
@@ -17,11 +17,12 @@ function PropertyCard({ property, Fav }) {
   };
 
   return (
-    <div 
-      
+    <div
+      onClick={() => navigate(`/property/${property.id}`)}
+      className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group"
     >
 
-      {/* Image */}
+      {/* IMAGE */}
       <div className="relative overflow-hidden">
 
         <img
@@ -33,41 +34,51 @@ function PropertyCard({ property, Fav }) {
           className="w-full h-52 object-cover group-hover:scale-105 transition duration-300"
         />
 
-        {/* Fav */}
+        {/* FAV BUTTON */}
         <button
-          className="absolute top-3 right-3 p-2 bg-slate-900/70 border border-slate-700 rounded-full backdrop-blur-md hover:scale-110 transition"
+          className="absolute top-3 right-3 p-2 bg-white border border-slate-200 rounded-full shadow-sm hover:scale-110 transition"
           onClick={handleFav}
         >
           {isFav ? (
-            <IoHeart className="text-red-500"/>
+            <IoHeart className="text-red-500" />
           ) : (
-            <IoHeartOutline className="text-white"/>
+            <IoHeartOutline className="text-slate-600" />
           )}
         </button>
 
-        {/* Price */}
-        <div className="absolute bottom-3 left-3 bg-emerald-500/90 text-white px-3 py-1 rounded-full text-sm font-medium shadow">
+        {/* PRICE BADGE */}
+        <div className="absolute bottom-3 left-3 bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow">
           ₹ {property.price}/month
         </div>
 
       </div>
 
-      {/* Info */}
+      {/* INFO */}
       <div className="p-4">
 
-        <h3 className="font-semibold text-lg text-white line-clamp-1">
+        <h3 className="font-semibold text-lg text-slate-900 line-clamp-1">
           {property.title}
         </h3>
 
-        <p className="text-slate-400 text-sm">
+        <p className="text-slate-500 text-sm">
           {property.city}
         </p>
 
-        <div className="flex justify-between items-center mt-3 text-sm text-slate-400">
-          <span>{property.bedrooms} Bedrooms</span>
-          <span>{property.bathrooms} Bathrooms</span>
-          <span onClick={() => navigate(`/property/${property.id}`)}
-            className="cursor-pointer text-green-700 hover:text-green-600 "> <IoOpenOutline size={22}/></span>
+        <div className="flex justify-between items-center mt-3 text-sm text-slate-500">
+
+          <span>{property.bedrooms} Beds</span>
+          <span>{property.bathrooms} Baths</span>
+
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/property/${property.id}`);
+            }}
+            className="text-indigo-600 hover:text-indigo-700"
+          >
+            <IoOpenOutline size={20} />
+          </span>
+
         </div>
 
       </div>

@@ -7,7 +7,7 @@ export const createOrder = async (req, res) => {
         const { bookingId } = req.body;
 
         const booking = await prisma.booking.findUnique({
-            where: { id: bookingId },
+            where: { id : bookingId },
             include: { property: true },
         })
 
@@ -97,7 +97,11 @@ export const getPayments = async (req, res) => {
                                 title: true,
                                 city: true,
                                 price: true,
-                                images: true,
+                                images: {
+                                    select: {
+                                        imageUrl: true,
+                                    }
+                                },
                             }
                         },
                         tenant: {

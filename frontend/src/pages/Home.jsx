@@ -10,39 +10,40 @@ function Home() {
 
   const Fav = { addFav, removeFav, favIds };
 
-  return (
-    <div className="bg-slate-950 min-h-screen">
+return (
+  <div className="bg-slate-50 min-h-screen">
 
-      <Hero onSearch={handleSearch} />
+    <Hero onSearch={handleSearch} />
 
-      {error && (
-        <p className="text-red-400 text-center mt-6">
-          {typeof error === "string" ? error : error?.message}
-        </p>
-      )}
+    {error && (
+      <p className="text-red-500 text-center mt-6">
+        {typeof error === "string" ? error : error?.message}
+      </p>
+    )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] mt-10">
+    <div className="grid grid-cols-1 lg:grid-cols-[62%_38%] gap-6 mt-6 px-4">
 
-        {/* LEFT: Listings */}
-        <div className="overflow-y-auto px-4">
-          <PropertySection
-            properties={properties}
-            loading={loading}
-            Fav={Fav}
-          />
-        </div>
-
-        {/* RIGHT: Sticky Map */}
-        <div className="hidden lg:block h-[60vh] sticky top-5 pr-4">
-          <div className="h-full rounded-xl overflow-hidden shadow-lg border border-slate-800">
-            <MapView properties={properties} />
-          </div>
-        </div>
-
+      {/* LEFT */}
+      <div className="overflow-y-auto">
+        <PropertySection
+          properties={properties}
+          loading={loading}
+          Fav={Fav}
+        />
       </div>
-      
+
+      {/* RIGHT MAP */}
+      <div className="hidden lg:block sticky top-6 h-[70vh]">
+        <div className="h-full rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-lg">
+          <MapView properties={properties} />
+        </div>
+      </div>
+
     </div>
-  );
+
+  </div>
+
+);
 }
 
 export default Home;

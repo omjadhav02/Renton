@@ -30,86 +30,83 @@ const SideBar = ({ onLogout, collapsed, setCollapsed }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-full bg-slate-950 border-r border-slate-800 transition-all duration-200 flex flex-col
-        ${collapsed ? "w-16" : "w-72"}`}
-    >
-      {/* HEADER */}
-      <div
-        className="p-4 cursor-pointer text-slate-300 hover:text-emerald-400 transition"
-        onClick={() => setCollapsed(!collapsed)}
-      >
-        {collapsed ? (
-          <TbLayoutSidebarRightCollapseFilled size={28} />
-        ) : (
-          <div className="flex justify-between items-center">
-            <Link to="/" className="flex flex-col leading-tight">
-              <span className="text-xl font-semibold text-white tracking-tight">
-                VerdeStay
-              </span>
-              <span className="text-xs text-slate-400">
-                Owner Panel
-              </span>
-            </Link>
+  className={`fixed top-0 left-0 h-full bg-white border-r border-slate-200 transition-all duration-200 flex flex-col shadow-sm
+    ${collapsed ? "w-16" : "w-72"}`}
+>
 
-            <TbLayoutSidebarLeftCollapseFilled size={26} />
-          </div>
-        )}
+  {/* HEADER */}
+  <div
+    className="p-4 cursor-pointer hover:bg-slate-50 transition"
+    onClick={() => setCollapsed(!collapsed)}
+  >
+    {collapsed ? (
+      <TbLayoutSidebarRightCollapseFilled size={26} className="text-slate-600"/>
+    ) : (
+      <div className="flex justify-between items-center">
+        <Link to="/" className="flex flex-col leading-tight">
+          <span className="text-xl font-semibold text-slate-900">
+            Renton
+          </span>
+          <span className="text-xs text-slate-500">
+            Owner Panel
+          </span>
+        </Link>
+
+        <TbLayoutSidebarLeftCollapseFilled size={22} className="text-slate-500"/>
       </div>
+    )}
+  </div>
 
-      {/* NAV */}
-      <div className="flex flex-col gap-2 px-2 flex-1">
+  {/* NAV */}
+  <div className="flex flex-col gap-1 px-2 flex-1">
 
-        {menu.map((item) => {
-          const active = location.pathname === item.path;
+    {menu.map((item) => {
+      const active = location.pathname === item.path;
 
-          return (
-            <Link to={item.path} key={item.name}>
-              <div
-                className={`flex items-center gap-3 p-3 rounded-xl transition-all
-                  ${
-                    active
-                      ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                      : "text-slate-400 hover:bg-slate-800 hover:text-emerald-300"
-                  }`}
-              >
-                <span className="text-lg">{item.icon}</span>
-
-                {!collapsed && (
-                  <span className="text-sm font-medium">
-                    {item.name}
-                  </span>
-                )}
-              </div>
-            </Link>
-          );
-        })}
-
-      </div>
-
-      {/* BOTTOM */}
-      <div className="p-2 border-t border-slate-800">
-
-        <div className="flex flex-col gap-2">
-
-          <Link to="/settings">
-            <div className="flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-emerald-300 transition">
-              <IoSettingsSharp size={iconSize} />
-              {!collapsed && <span className="text-sm">Settings</span>}
-            </div>
-          </Link>
-
+      return (
+        <Link to={item.path} key={item.name}>
           <div
-            onClick={onLogout}
-            className="flex items-center gap-3 p-3 rounded-xl text-red-500 hover:bg-red-500 hover:text-white transition cursor-pointer"
+            className={`flex items-center gap-3 p-3 rounded-xl transition-all
+              ${
+                active
+                  ? "bg-indigo-50 text-indigo-600"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              }`}
           >
-            <IoLogOutOutline size={iconSize} />
-            {!collapsed && <span className="text-sm">Logout</span>}
+            <span>{item.icon}</span>
+
+            {!collapsed && (
+              <span className="text-sm font-medium">
+                {item.name}
+              </span>
+            )}
           </div>
+        </Link>
+      );
+    })}
 
-        </div>
+  </div>
 
+  {/* BOTTOM */}
+  <div className="p-2 border-t border-slate-200">
+
+    <Link to="/settings">
+      <div className="flex items-center gap-3 p-3 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+        <IoSettingsSharp size={iconSize} />
+        {!collapsed && <span className="text-sm">Settings</span>}
       </div>
+    </Link>
+
+    <div
+      onClick={onLogout}
+      className="flex items-center gap-3 p-3 rounded-xl text-red-500 hover:bg-red-50 transition cursor-pointer"
+    >
+      <IoLogOutOutline size={iconSize} />
+      {!collapsed && <span className="text-sm">Logout</span>}
     </div>
+
+  </div>
+</div>
   );
 };
 

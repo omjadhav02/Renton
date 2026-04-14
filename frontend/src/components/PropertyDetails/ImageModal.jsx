@@ -11,7 +11,7 @@ function ImageModal({ images, currentImage, setCurrentImage, setShowModal }) {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
 
             <button
                 onClick={() => setShowModal(false)}
@@ -29,7 +29,7 @@ function ImageModal({ images, currentImage, setCurrentImage, setShowModal }) {
 
             <img
                 src={images[currentImage]}
-                className="max-h-[80vh] rounded-lg"
+                className="max-h-[80vh] rounded-xl shadow-lg"
             />
 
             <button

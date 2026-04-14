@@ -9,46 +9,38 @@ function OwnerLayout({ logout }) {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-slate-50">
 
-      {/* SIDEBAR */}
-      <SideBar
-        onLogout={logout}
-        collapsed={collapsed}
-        setCollapsed={setCollapsed}
-      />
+  <SideBar
+    onLogout={logout}
+    collapsed={collapsed}
+    setCollapsed={setCollapsed}
+  />
 
-      {/* MAIN CONTENT */}
-      <div
-        className={`flex flex-1 flex-col transition-all duration-300
-          ${collapsed ? "ml-16" : "ml-72"}`}
-      >
+  <div className={`flex flex-1 flex-col ${collapsed ? "ml-16" : "ml-72"}`}>
 
-        {/* TOP BAR */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-800 bg-slate-950/70 backdrop-blur-md">
+    <div className="flex justify-between items-center px-6 py-4 border-b border-slate-200 bg-white">
 
-          <h1 className="text-white font-semibold text-lg tracking-tight">
-            Owner Dashboard
-          </h1>
+      <h1 className="text-slate-900 font-semibold text-lg">
+        Dashboard
+      </h1>
 
-          <Link to="/settings">
-            <div className="p-2 rounded-xl border border-slate-700 text-slate-300 hover:text-emerald-400 hover:border-emerald-500/40 hover:bg-slate-800 transition cursor-pointer">
-              <FaHouseUser size={20}/>
-            </div>
-          </Link>
-
+      <Link to="/settings">
+        <div className="p-2 rounded-xl border border-slate-200 hover:bg-slate-50">
+          <FaHouseUser size={20}/>
         </div>
+      </Link>
 
-        {/* CONTENT */}
-        <main className="flex-1 p-6">
-          <Outlet />
-        </main>
-
-        {/* FOOTER */}
-        <Footer />
-
-      </div>
     </div>
+
+    <main className="flex-1 p-6">
+      <Outlet />
+    </main>
+
+    <Footer />
+
+  </div>
+</div>
   );
 }
 

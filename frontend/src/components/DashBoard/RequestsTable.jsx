@@ -23,19 +23,19 @@ const RequestsTable = ({ requests, setRequests, onChat }) => {
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+<div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
 
-  <h2 className="text-lg font-semibold text-white mb-4">
+  <h2 className="text-lg font-semibold text-slate-900 mb-4">
     Recent Requests
   </h2>
 
   {requests.length === 0 ? (
-    <p className="text-slate-400">No requests found</p>
+    <p className="text-slate-500">No requests found</p>
   ) : (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm text-left text-slate-300">
+      <table className="w-full text-sm text-left text-slate-700">
 
-        <thead className="border-b border-slate-800 text-slate-400">
+        <thead className="border-b border-slate-200 text-slate-500">
           <tr>
             <th className="py-2">Property</th>
             <th className="py-2">Tenant</th>
@@ -47,7 +47,7 @@ const RequestsTable = ({ requests, setRequests, onChat }) => {
 
         <tbody>
           {requests.map((req) => (
-            <tr key={req.id} className="border-b border-slate-800 hover:bg-slate-800/50 transition">
+            <tr key={req.id} className="border-b border-slate-100 hover:bg-slate-50">
 
               <td className="py-3">{req.property?.title}</td>
               <td className="py-3">{req.tenant?.name}</td>
@@ -57,16 +57,14 @@ const RequestsTable = ({ requests, setRequests, onChat }) => {
                 {new Date(req.endDate).toLocaleDateString()}
               </td>
 
-              <td className="py-3 capitalize">
-                <span
-                  className={`px-2 py-1 rounded text-xs ${
-                    req.status === "approved"
-                      ? "bg-emerald-500/10 text-emerald-400"
-                      : req.status === "pending"
-                      ? "bg-yellow-500/10 text-yellow-400"
-                      : "bg-red-500/10 text-red-400"
-                  }`}
-                >
+              <td className="py-3">
+                <span className={`px-2 py-1 rounded text-xs font-medium
+                  ${req.status === "approved"
+                    ? "bg-green-50 text-green-600"
+                    : req.status === "pending"
+                    ? "bg-yellow-50 text-yellow-600"
+                    : "bg-red-50 text-red-600"
+                  }`}>
                   {req.status}
                 </span>
               </td>
@@ -77,14 +75,14 @@ const RequestsTable = ({ requests, setRequests, onChat }) => {
 
                     <button
                       onClick={() => handleStatusUpdate(req.id, "approved")}
-                      className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-sm hover:bg-emerald-700 transition"
+                      className="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-sm hover:bg-indigo-700"
                     >
                       Approve
                     </button>
 
                     <button
                       onClick={() => handleStatusUpdate(req.id, "cancelled")}
-                      className="px-3 py-1.5 rounded-lg bg-red-600 text-white text-sm hover:bg-red-700 transition"
+                      className="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm hover:bg-red-600"
                     >
                       Reject
                     </button>
@@ -95,7 +93,7 @@ const RequestsTable = ({ requests, setRequests, onChat }) => {
                 {req.status === "approved" && (
                   <button
                     onClick={() => onChat(req.tenant)}
-                    className="px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white hover:border-emerald-500 transition"
+                    className="px-4 py-2 rounded-lg border border-slate-200 hover:bg-slate-50"
                   >
                     Chat
                   </button>

@@ -4,7 +4,6 @@ import {
   IoCheckmark,
   IoClose,
   IoMailOutline,
-  IoSend,
   IoTrash
 } from "react-icons/io5";
 
@@ -15,85 +14,71 @@ const Actions = ({ info }) => {
   return (
     <div className="mt-4 space-y-4">
 
-  {/* PENDING */}
-  {request.status === "pending" && (
-    <div className="flex gap-3">
-      <button
-        onClick={() => onApprove(request.id)}
-        className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition"
-      >
-        <IoCheckmark />
-        Approve
-      </button>
+      {request.status === "pending" && (
+        <div className="flex gap-3">
+          <button
+            onClick={() => onApprove(request.id)}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700"
+          >
+            <IoCheckmark />
+            Approve
+          </button>
 
-      <button
-        onClick={() => onReject(request.id)}
-        className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-slate-800 border border-slate-700 text-white hover:border-red-500 transition"
-      >
-        <IoClose />
-        Reject
-      </button>
-    </div>
-  )}
-
-  {/* APPROVED */}
-  {request.status === "approved" && tenant && (
-    <div className="p-5 rounded-2xl bg-slate-800 border border-slate-700 space-y-5">
-
-      <div className="flex items-center gap-3">
-        <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
-          <IoChatbubbleEllipsesOutline />
+          <button
+            onClick={() => onReject(request.id)}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border border-slate-200 text-slate-700 hover:bg-slate-50"
+          >
+            <IoClose />
+            Reject
+          </button>
         </div>
-        <h3 className="text-sm font-semibold text-white">
-          Communication Hub
-        </h3>
-      </div>
+      )}
 
-      {/* CONTACT */}
-      <div>
-        <p className="text-xs text-slate-400 mb-2 font-medium">Contact</p>
+      {request.status === "approved" && tenant && (
+        <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-5">
 
-        <div className="flex flex-wrap gap-3">
+          <h3 className="text-sm font-semibold text-slate-900">
+            Communication
+          </h3>
 
-          {tenant.phone && (
-            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
-              <IoCallOutline className="text-emerald-400" />
-              {tenant.phone}
+          <div className="flex flex-wrap gap-3">
+
+            {tenant.phone && (
+              <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700">
+                <IoCallOutline />
+                {tenant.phone}
+              </div>
+            )}
+
+            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700">
+              <IoMailOutline />
+              {tenant.email}
             </div>
-          )}
 
-          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white">
-            <IoMailOutline className="text-blue-400" />
-            {tenant.email}
           </div>
 
-        </div>
-      </div>
+          <button
+            onClick={() => onChat(tenant)}
+            className="flex items-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700"
+          >
+            <IoChatbubbleEllipsesOutline />
+            Chat
+          </button>
 
-      {/* CHAT */}
-      <button
-        onClick={() => onChat(tenant)}
-        className="flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition"
-      >
-        <IoChatbubbleEllipsesOutline />
-        Chat
-      </button>
+        </div>
+      )}
+
+      {request.status === "cancelled" && (
+        <button
+          onClick={() => onDelete(request.id)}
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm bg-red-50 text-red-600 hover:bg-red-100"
+        >
+          <IoTrash />
+          Remove
+        </button>
+      )}
 
     </div>
-  )}
-
-  {/* CANCELLED */}
-  {request.status === "cancelled" && (
-    <button
-      onClick={() => onDelete(request.id)}
-      className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm bg-red-500/10 text-red-400 hover:bg-red-500/20 transition"
-    >
-      <IoTrash />
-      Remove
-    </button>
-  )}
-
-</div>
   );
 };
 

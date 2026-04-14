@@ -22,17 +22,17 @@ const RequestCard = ({ request, onApprove, onReject, onChat, onDelete }) => {
     switch (status) {
       case "approved":
         return {
-          style: "bg-green-100 text-green-700",
+          style: "bg-green-50 text-green-600",
           icon: <IoCheckmarkCircleOutline />
         };
       case "pending":
         return {
-          style: "bg-yellow-100 text-yellow-700",
+          style: "bg-yellow-50 text-yellow-600",
           icon: <IoTimeOutline />
         };
       case "cancelled":
         return {
-          style: "bg-red-100 text-red-700",
+          style: "bg-red-50 text-red-600",
           icon: <IoCloseCircleOutline />
         };
       default:
@@ -46,53 +46,48 @@ const RequestCard = ({ request, onApprove, onReject, onChat, onDelete }) => {
   const status = getStatusConfig(request.status);
 
   return (
-    <div className="flex gap-5 bg-slate-900 border border-slate-800 p-5 rounded-2xl hover:border-emerald-500/30 transition">
+    <div className="flex gap-5 bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition">
 
-  {/* IMAGE */}
-  <img
-    src={image}
-    alt="property"
-    className="w-32 h-24 object-cover rounded-xl"
-  />
+      <img
+        src={image}
+        alt="property"
+        className="w-32 h-24 object-cover rounded-xl"
+      />
 
-  <div className="flex-1 space-y-4">
+      <div className="flex-1 space-y-4">
 
-    {/* TOP */}
-    <div className="flex justify-between items-start">
+        <div className="flex justify-between items-start">
 
-      <div>
-        <h2 className="text-lg font-semibold text-white">
-          {property.title}
-        </h2>
+          <div>
+            <h2 className="text-lg font-semibold text-slate-900">
+              {property.title}
+            </h2>
 
-        <p className="text-slate-400 text-sm mt-1">
-          Tenant: <span className="text-white font-medium">{tenant.name}</span>
-        </p>
+            <p className="text-slate-500 text-sm mt-1">
+              Tenant: <span className="text-slate-800 font-medium">{tenant.name}</span>
+            </p>
+          </div>
+
+          <span className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${status.style}`}>
+            {status.icon}
+            {request.status}
+          </span>
+
+        </div>
+
+        <div className="text-sm text-slate-500 flex items-center gap-2">
+          <IoCalendarOutline size={16} />
+          {new Date(request.startDate).toLocaleDateString()} →
+          {new Date(request.endDate).toLocaleDateString()}
+        </div>
+
+        <PropertyInfo property={property} />
+
+        <Actions info={info} />
+
       </div>
 
-      <span className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${status.style}`}>
-        {status.icon}
-        {request.status}
-      </span>
-
     </div>
-
-    {/* DATES */}
-    <div className="text-sm text-slate-400 flex items-center gap-2">
-      <IoCalendarOutline size={16} />
-      {new Date(request.startDate).toLocaleDateString()} →
-      {new Date(request.endDate).toLocaleDateString()}
-    </div>
-
-    {/* INFO */}
-    <PropertyInfo property={property} />
-
-    {/* ACTIONS */}
-    <Actions info={info} />
-
-  </div>
-
-</div>
   );
 };
 

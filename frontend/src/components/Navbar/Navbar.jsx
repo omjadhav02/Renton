@@ -21,53 +21,44 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/70 border-b border-slate-800/60">
+    <nav className="sticky top-0 z-50 bg-white border-b border-slate-200">
 
-      {/* subtle gradient glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-emerald-500/5 pointer-events-none"></div>
+  <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
 
-      <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+    {/* BRAND */}
+    <Link to="/" className="flex flex-col leading-tight">
+      <span className="text-2xl font-semibold text-slate-900">
+        Renton
+      </span>
+      <span className="text-xs text-slate-500">
+        Find. Book. MoveIn.
+      </span>
+    </Link>
 
-        {/* BRAND */}
-        <Link to="/" className="group flex flex-col leading-tight">
+    <div className="hidden md:flex items-center gap-6">
+      <DesktopMenu user={user} onLogout={handleLogout} />
+    </div>
 
-          <span className="text-2xl md:text-3xl font-semibold tracking-tight text-white group-hover:text-emerald-400 transition">
-            VerdeStay
-          </span>
+    <button
+      onClick={() => setMobileOpen(!mobileOpen)}
+      className="md:hidden text-slate-700"
+    >
+      {mobileOpen ? <IoClose size={28}/> : <IoMenu size={28}/>}
+    </button>
 
-          <span className="text-[11px] md:text-xs text-slate-400 group-hover:text-emerald-300 transition">
-            Live Better. Stay Smarter.
-          </span>
+  </div>
 
-        </Link>
+  {mobileOpen && (
+    <div className="border-t border-slate-200 bg-white">
+      <MobileMenu
+        user={user}
+        onLogout={handleLogout}
+        closeMenu={() => setMobileOpen(false)}
+      />
+    </div>
+  )}
 
-        {/* DESKTOP MENU */}
-        <div className="hidden md:flex items-center gap-6">
-          <DesktopMenu user={user} onLogout={handleLogout} />
-        </div>
-
-        {/* MOBILE BUTTON */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-white hover:text-emerald-400 transition"
-        >
-          {mobileOpen ? <IoClose size={28}/> : <IoMenu size={28}/>}
-        </button>
-
-      </div>
-
-      {/* MOBILE MENU */}
-      {mobileOpen && (
-        <div className="border-t border-slate-800/60 bg-slate-950/95 backdrop-blur-xl">
-          <MobileMenu
-            user={user}
-            onLogout={handleLogout}
-            closeMenu={() => setMobileOpen(false)}
-          />
-        </div>
-      )}
-
-    </nav>
+</nav>
   );
 }
 
