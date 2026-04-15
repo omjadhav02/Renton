@@ -22,7 +22,7 @@ function OwnerLayout({ logout }) {
     <div className="flex justify-between items-center px-6 py-4 border-b border-slate-200 bg-white">
 
       <h1 className="text-slate-900 font-semibold text-lg">
-        Dashboard
+        Renton
       </h1>
 
       <Link to="/settings">

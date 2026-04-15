@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAddProperty } from "../../hooks/useAddProperty";
+import MapPicker from "../../features/map/components/MapPicker";
 
 function AddProperty() {
   const { handleSubmit } = useAddProperty();
@@ -16,7 +17,9 @@ function AddProperty() {
     postCode: "",
     propertyType: "",
     bedrooms: "",
-    bathrooms: ""
+    bathrooms: "",
+    latitude: "",
+    longitude: "",
   });
 
   const [images, setImages] = useState([]);
@@ -150,6 +153,18 @@ function AddProperty() {
               className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500"
               required
             />
+          </div>
+
+          <div className="mt-6">
+            <h3 className="text-md font-medium mb-2">Double Tap to select Location on Map</h3>
+
+            <MapPicker form={form} setForm={setForm} />
+
+            {form.latitude && (
+              <p className="text-sm text-gray-500 mt-2">
+                📍 Lat: {form.latitude} | Lng: {form.longitude}
+              </p>
+            )}
           </div>
         </div>
 

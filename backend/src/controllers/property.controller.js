@@ -9,9 +9,20 @@ export const createProperty = async (req, res) => {
       return res.status(400).json({message: "All fields required!"})
     }
 
-    const fullAddress = `${address}, ${city}, ${state}, ${country}`;
+    let latitude, longitude;
 
-    const { latitude, longitude } = await getCoordinates(fullAddress);
+    // ✅ if frontend sends coordinates (from map)
+    if (req.body.latitude && req.body.longitude) {
+      latitude = Number(req.body.latitude);
+      longitude = Number(req.body.longitude);
+    } else {
+      // fallback to geocoding
+      const fullAddress = `${address}, ${city}, ${state}, ${country}`;
+
+      const coords = await getCoordinates(fullAddress);
+      latitude = coords.latitude;
+      longitude = coords.longitude;
+    }
 
     const property = await prisma.property.create({
         data: {
@@ -243,7 +254,14 @@ export const updateProperty = async (req, res) => {
     if (req.body.bedrooms) data.bedrooms = Number(req.body.bedrooms);
     if (req.body.bathrooms) data.bathrooms = Number(req.body.bathrooms);
 
-    if (
+    // 🧠 PRIORITY 1: Use frontend lat/lng (from map)
+    if (req.body.latitude && req.body.longitude) {
+      data.latitude = Number(req.body.latitude);
+      data.longitude = Number(req.body.longitude);
+    }
+
+    // 🧠 PRIORITY 2: fallback to geocoding
+    else if (
       req.body.address ||
       req.body.city ||
       req.body.state ||
@@ -254,10 +272,15 @@ export const updateProperty = async (req, res) => {
         ${req.body.state || property.state}, 
         ${req.body.country || property.country}`;
 
-      const { latitude, longitude } = await getCoordinates(fullAddress);
+      try {
+        const { latitude, longitude } = await getCoordinates(fullAddress);
 
-      data.latitude = latitude;
-      data.longitude = longitude;
+        data.latitude = latitude;
+        data.longitude = longitude;
+      } catch (err) {
+        console.warn("Geocoding failed, keeping old coordinates");
+        // ✅ DO NOT crash
+      }
     }
 
     const updated = await prisma.property.update({

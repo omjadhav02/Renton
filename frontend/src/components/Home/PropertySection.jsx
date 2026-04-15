@@ -1,6 +1,6 @@
 import PropertyGrid from "./PropertyGrid";
 
-function PropertySection({ properties, loading, Fav }) {
+function PropertySection({ properties, loading, Fav, onSelect }) {
   return (
     <section className="px-2 py-6">
 
@@ -24,7 +24,7 @@ function PropertySection({ properties, loading, Fav }) {
 
   </div>
 
-  <PropertyGrid properties={properties} loading={loading} Fav={Fav} />
+  <PropertyGrid properties={properties} loading={loading} Fav={Fav} onSelect={onSelect} />
 
 </section>
   );

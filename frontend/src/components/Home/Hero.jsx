@@ -13,32 +13,39 @@ function Hero({ onSearch }) {
   } = useSearchProperty(onSearch);
 
   return (
-    // ONLY UI CHANGED — LOGIC SAME
+    <section className="relative px-4 pt-16 pb-10 bg-gradient-to-b from-slate-50 via-white to-white">
 
-<section className="relative py-24 px-6 bg-white">
+      <div className="max-w-5xl mx-auto text-center">
 
-  <div className="max-w-6xl mx-auto text-center">
+        {/* HEADLINE */}
+        <h1 className="text-3xl md:text-5xl font-semibold text-slate-900 tracking-tight leading-tight">
+          Find your next <span className="text-indigo-600">perfect home</span>
+        </h1>
 
-    <h1 className="text-4xl md:text-6xl font-semibold text-slate-900 mb-6 tracking-tight">
-      Find. Book. MoveIn.
-    </h1>
+        {/* SUBTEXT */}
+        <p className="text-slate-500 mt-4 mb-8 text-base md:text-lg max-w-xl mx-auto">
+          Smart search. Seamless booking. Designed for modern renters.
+        </p>
 
-    <p className="text-slate-500 mb-12 text-lg max-w-2xl mx-auto">
-      Discover premium homes with a seamless renting experience built for modern living.
-    </p>
+        {/* SEARCH CARD */}
+        <div >
+          <SearchBar
+            handleChange={handleChange}
+            handleSearch={handleSearch}
+            filters={filters}
+            price={price}
+            bhkOptions={bhkOptions}
+            setFilters={setFilters}
+            setPrice={setPrice}
+          />
+        </div>
 
-    <SearchBar
-      handleChange={handleChange}
-      handleSearch={handleSearch}
-      filters={filters}
-      price={price}
-      bhkOptions={bhkOptions}
-      setFilters={setFilters}
-      setPrice={setPrice}
-    />
+      </div>
 
-  </div>
-</section>
+      {/* OPTIONAL: subtle bottom fade */}
+      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+
+    </section>
   );
 }
 

@@ -1,7 +1,7 @@
 import { IoHeart, IoHeartOutline, IoOpenOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-function PropertyCard({ property, Fav }) {
+function PropertyCard({ property, Fav, onSelect }) {
 
   const navigate = useNavigate();
   const isFav = Fav.favIds.includes(property.id);
@@ -16,9 +16,13 @@ function PropertyCard({ property, Fav }) {
     }
   };
 
+  const handleClick = () => {
+    onSelect(property);
+  }
+
   return (
     <div
-      onClick={() => navigate(`/property/${property.id}`)}
+      onClick={handleClick}
       className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group"
     >
 

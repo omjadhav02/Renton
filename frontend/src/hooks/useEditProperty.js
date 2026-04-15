@@ -22,6 +22,8 @@ export const useEditProperty = () => {
         state:"",
         country: "",
         postCode: "",
+        latitude: "",
+        longitude: "",
     });
 
     const [existingImages, setExistingImages] = useState([]);
@@ -48,7 +50,8 @@ export const useEditProperty = () => {
                 propertyType: data.propertyType,
                 bedrooms: data.bedrooms,
                 bathrooms: data.bathrooms,
-
+                latitude: data.latitude,
+                longitude: data.longitude,
             });
 
             setExistingImages(data.images || []);
@@ -128,7 +131,7 @@ export const useEditProperty = () => {
             }
 
             toast.success("Property updated!");
-            navigate("/owner/properties");
+            navigate("/owner/my-properties");
 
         } catch (error) {
             toast.error("Update failed");

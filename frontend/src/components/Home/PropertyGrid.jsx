@@ -1,7 +1,7 @@
 import PropertyCard from "../PropertyCard";
 import PropertySkeleton from "../PropertySkeleton";
 
-function PropertyGrid({ properties, loading, Fav }) {
+function PropertyGrid({ properties, loading, Fav, onSelect }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
   {loading
@@ -9,7 +9,7 @@ function PropertyGrid({ properties, loading, Fav }) {
         <PropertySkeleton key={i} />
       ))
     : properties.map((property) => (
-        <PropertyCard key={property.id} property={property} Fav={Fav} />
+        <PropertyCard key={property.id} property={property} Fav={Fav} onSelect={onSelect}/>
       ))
   }
 

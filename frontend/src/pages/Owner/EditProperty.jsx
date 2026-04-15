@@ -1,11 +1,13 @@
 import { IoImagesOutline } from "react-icons/io5"
 import { useEditProperty } from "../../hooks/useEditProperty";
 import { useRef } from "react";
+import MapPicker from "../../features/map/components/MapPicker";
 
 function EditProperty() {
   const fileInputRef = useRef();
   const {
     form,
+    setForm,
     existingImages,
     preview,
     loading,
@@ -125,6 +127,21 @@ function EditProperty() {
               placeholder="Postal Code"
               required
             />
+          </div>
+
+          {/* 🗺️ MAP PICKER */}
+          <div className="mt-6">
+            <h3 className="text-md font-medium mb-2">
+              Update Location on Map
+            </h3>
+
+            <MapPicker form={form} setForm={setForm} />
+
+            {form.latitude && (
+              <p className="text-sm text-gray-500 mt-2">
+                📍 Lat: {form.latitude} | Lng: {form.longitude}
+              </p>
+            )}
           </div>
         </div>
 
