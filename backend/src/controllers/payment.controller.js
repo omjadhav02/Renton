@@ -1,4 +1,5 @@
 import prisma from "../config/prisma.js"
+import { paymentQueue } from "../queue/paymentQueue.js";
 import { razorpay } from "../utils/razorpay.js"
 import crypto from "crypto";
 
@@ -15,36 +16,23 @@ export const createOrder = async (req, res) => {
             return res.status(404).json({message: "Booking not found!"})
         }
 
-        const existingPayment = await prisma.payment.findUnique({
-            where: { bookingId }
-        });
-
-        if (existingPayment) {
-            return res.json({
-                orderId: existingPayment.razorpayOrderId,
-                amount: existingPayment.amount
-            });
-        }
-
-        const amount = booking.property.price;
-
-        const order = await razorpay.orders.create({
-            amount: amount * 100, 
-            currency: "INR",
-        })
-
-        await prisma.payment.create({
-            data: {
+        const payment = await prisma.payment.upsert({
+            where: { bookingId },
+            update: {},
+            create: {
                 bookingId,
-                amount,
-                status: "pending",
-                razorpayOrderId: order.id
+                amount: booking.property.price,
+                status:"pending",
             }
         })
 
+        await paymentQueue.add("create-order", {
+            paymentId: payment.id,
+        })
+    
         res.json({
-            orderId: order.id,
-            amount
+            message: "Order is being processed",
+            paymentId: payment.id,
         })
 
     } catch (error) {
@@ -70,6 +58,18 @@ export const verifyPayment = async (req, res) => {
             return res.status(400).json({message: "Invalid signature" })
         }
 
+        const payment = await prisma.payment.findUnique({
+            where: { bookingId },
+        })
+
+        if(!payment){
+            return res.status(404).json({ message: "Payment not found"})
+        }
+
+        if(payment.status === "success"){
+            return res.json({ message: "Already verified"})
+        }
+
         await prisma.payment.update({
             where: { bookingId },
             data: {
@@ -87,39 +87,39 @@ export const verifyPayment = async (req, res) => {
 }
 
 export const getPayments = async (req, res) => {
-    try {
-        const payments = await prisma.payment.findMany({
-            include: {
-                booking: {
-                    include:{
-                        property: {
-                            select: {
-                                title: true,
-                                city: true,
-                                price: true,
-                                images: {
-                                    select: {
-                                        imageUrl: true,
-                                    }
-                                },
-                            }
-                        },
-                        tenant: {
-                            select: {
-                                name: true,
-                                email: true
-                            }
+    const page = parseInt(req.query.page) || 0;
+
+    const payments = await prisma.payment.findMany({
+        take: 20,
+        skip: page * 20,
+        orderBy: { createdAt: "desc" },
+        include: {
+            booking: {
+                include: {
+                    tenant: true,
+                    property: {
+                        include: {
+                            images: true,
                         }
                     }
                 }
-            },
-            orderBy: {
-                createdAt: "desc"
             }
-        })
+        }
+    })
 
-        res.json(payments);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    res.json(payments);
+}
+
+export const getPaymentById = async (req, res) => {
+    const { paymentId } = req.params;
+
+    const payment = await prisma.payment.findUnique({
+        where: { id: paymentId },
+    })
+
+    if(!payment) {
+        return res.status(404).json({message: "Not found"});
     }
+
+    res.json(payment);
 }

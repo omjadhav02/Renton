@@ -99,7 +99,7 @@ model Payment {
   amount    Float
   status    String
 
-  razorpayOrderId    String?
+  razorpayOrderId    String?  @unique
   razorpayPaymentId  String?
 
   createdAt DateTime @default(now())

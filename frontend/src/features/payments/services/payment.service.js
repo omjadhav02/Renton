@@ -17,3 +17,18 @@ export const verifyPayments = async (payload) => {
 
     return res.data;
 }
+
+
+export const pollPayment = async (paymentId) => {
+    for (let i=0; i<10; i++){
+        const res = await axiosInstance.get(`/payments/${paymentId}`);
+
+        if(res.data.razorpayOrderId){
+            return res.data;
+        }
+
+        await new Promise(r => setTimeout(r,1000));
+    }
+
+    throw new Error("Order creation timeout");
+}

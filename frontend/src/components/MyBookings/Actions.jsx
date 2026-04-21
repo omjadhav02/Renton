@@ -1,5 +1,5 @@
 import { IoCallOutline, IoCardSharp, IoChatbubbleEllipsesOutline, IoMailOutline, IoSendSharp, IoTrash } from "react-icons/io5";
-import { createOrder, verifyPayments } from "../../features/payments/services/payment.service";
+import { createOrder, pollPayment, verifyPayments } from "../../features/payments/services/payment.service";
 import toast from "react-hot-toast"
 import { useState } from "react";
 
@@ -11,12 +11,13 @@ const Actions = ({booking, owner, onDelete, onChat }) => {
         setLoading(true);
         try {
             const data = await createOrder({bookingId: booking.id});
-        
+
+            const payment = await pollPayment(data.paymentId);
 
             const options = {
                 key: import.meta.env.VITE_RAZORPAY_KEY,
-                amount: data.amount * 100,
-                order_id: data.orderId,
+                amount: payment.amount * 100,
+                order_id: payment.razorpayOrderId,
 
                 handler: async (response) => {
                     await verifyPayments({ ...response,bookingId: booking.id })
@@ -85,8 +86,8 @@ const Actions = ({booking, owner, onDelete, onChat }) => {
                     </p>
                     <div className="flex gap-3 flex-wrap">
                         <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-100 text-blue-700 font-medium hover:bg-blue-200 transition" >
-                                    <IoSendSharp/>
-                                    Mail Owner 
+                            <IoSendSharp/>
+                            Mail Owner 
                         </button>
                     </div>    
                 </div>
