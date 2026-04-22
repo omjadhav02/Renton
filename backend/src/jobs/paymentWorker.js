@@ -1,6 +1,6 @@
 import { Worker } from "bullmq";
 import prisma from "../config/prisma.js";
-import { razorpay } from "../utils/razorpay.js";
+import { razorpay } from "../config/razorpay.js";
 import IORedis from "ioredis"
 
 const connection = new IORedis({

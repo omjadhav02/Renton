@@ -10,6 +10,7 @@ import chatRoutes from "./routes/chat.route.js"
 import uploadRoutes from "./routes/upload.route.js"
 import paymentRoutes from "./routes/payment.route.js"
 import webhookRoutes from "./routes/webhook.route.js"
+import botRoutes from "./routes/bot.route.js";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/favorites", favoriteRoutes)
 app.use("/api/chats", chatRoutes)
 app.use("/api/upload", uploadRoutes)
 app.use("/api/payments", paymentRoutes)
+app.use("/api/bot", botRoutes);
 
 
 
