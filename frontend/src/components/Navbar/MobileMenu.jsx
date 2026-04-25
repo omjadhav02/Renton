@@ -22,6 +22,7 @@ function MobileMenu({ user, onLogout, closeMenu }) {
     <>
       <Link to="/favorites" onClick={closeMenu}>Favorites</Link>
       <Link to="/my-bookings" onClick={closeMenu}>Bookings</Link>
+      <Link to="/bot" onClick={closeMenu}>Renton AI</Link>
     </>
   )}
 

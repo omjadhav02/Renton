@@ -80,46 +80,72 @@ export const verifyPayment = async (req, res) => {
 
         res.json({message: "Payment Verified!"})
 
-
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
 
 export const getPayments = async (req, res) => {
-    const page = parseInt(req.query.page) || 0;
+    try {
+        const page = parseInt(req.query.page) || 0;
 
-    const payments = await prisma.payment.findMany({
-        take: 20,
-        skip: page * 20,
-        orderBy: { createdAt: "desc" },
-        include: {
-            booking: {
-                include: {
-                    tenant: true,
-                    property: {
-                        include: {
-                            images: true,
+        const payments = await prisma.payment.findMany({
+            take: 20,
+            skip: page * 20,
+            orderBy: { createdAt: "desc" },
+            include: {
+                booking: {
+                    include: {
+                        tenant: true,
+                        property: {
+                            include: {
+                                images: true,
+                            }
                         }
                     }
                 }
             }
-        }
-    })
+        })
 
-    res.json(payments);
+        res.json(payments);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+    
 }
 
 export const getPaymentById = async (req, res) => {
-    const { paymentId } = req.params;
+    try {
+        const { paymentId } = req.params;
 
-    const payment = await prisma.payment.findUnique({
-        where: { id: paymentId },
-    })
+        const payment = await prisma.payment.findUnique({
+            where: { id: paymentId },
+        })
 
-    if(!payment) {
-        return res.status(404).json({message: "Not found"});
+        if(!payment) {
+            return res.status(404).json({message: "Not found"});
+        }
+
+        res.json(payment);
+    } catch (error) {
+        res.status(500).json({ error: error.message })
     }
+}
 
-    res.json(payment);
+export const getPaymentStatus = async (req, res) => {
+    try {
+        const { bookingId } = req.params;
+
+        const paymentStatus = await prisma.payment.findUnique({
+            where: { bookingId: bookingId},
+            select: {
+                status: true,
+            }
+        })        
+
+        res.json(paymentStatus);
+
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 }

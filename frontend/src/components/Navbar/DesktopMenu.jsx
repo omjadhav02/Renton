@@ -9,6 +9,8 @@ import {
   IoAdd
 } from "react-icons/io5";
 
+import { BsStars } from "react-icons/bs";
+
 import ProfileDropdown from "./ProfileDropdown";
 
 function DesktopMenu({ user, onLogout }) {
@@ -28,6 +30,10 @@ function DesktopMenu({ user, onLogout }) {
 
       <Link to="/my-bookings" className="flex items-center gap-1 hover:text-indigo-600 transition">
         <IoCalendarOutline/> Bookings
+      </Link>
+
+      <Link to="/bot" className="flex items-center gap-1 hover:text-indigo-600 transition">
+        <BsStars/> Renton AI Assistant
       </Link>
     </>
   )}

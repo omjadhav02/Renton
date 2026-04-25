@@ -32,3 +32,9 @@ export const pollPayment = async (paymentId) => {
 
     throw new Error("Order creation timeout");
 }
+
+export const paymentStatus = async (bookingId) => {
+    const res = await axiosInstance.get(`/payments/status/${bookingId}`);
+    
+    return res.data;
+}
