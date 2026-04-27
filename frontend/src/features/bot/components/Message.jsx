@@ -7,17 +7,23 @@ const Message = () => {
   const { input, setInput, messages, loading, sendMessage } = useBot();
 
   return (
-    <div className="flex flex-col h-[100vh] bg-gray-100">
-      <MessageHeader />
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-white flex justify-center overflow-hidden">
 
-      <MessageBox messages={messages} loading={loading} />
+      {/* CENTERED CONTAINER */}
+      <div className="w-full max-w-3xl flex flex-col h-screen overflow-hidden max-h-[600px]">
 
-      <MessageInput
-        input={input}
-        setInput={setInput}
-        sendMessage={sendMessage}
-        loading={loading}
-      />
+        <MessageHeader />
+
+        <MessageBox messages={messages} loading={loading} />
+
+        <MessageInput
+          input={input}
+          setInput={setInput}
+          sendMessage={sendMessage}
+          loading={loading}
+        />
+
+      </div>
     </div>
   );
 };

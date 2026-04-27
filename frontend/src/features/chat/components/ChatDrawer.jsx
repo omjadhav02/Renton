@@ -23,7 +23,7 @@ const ChatDrawer = ({ isOpen, onClose, user }) => {
                         exit={{ x: "100%" }}
                         transition={{ duration: 0.3 }}
                         className="fixed right-0 top-16 h-[calc(100%-4rem)] w-[380px] 
-                        bg-slate-950 border-l border-slate-800 shadow-2xl z-[100] flex flex-col"
+                        bg-white border-l border-slate-200 shadow-2xl z-[100] flex flex-col"
                     >
                         <ChatHeader user={user} onClose={onClose} onlineUsers={onlineUsers}/>
 

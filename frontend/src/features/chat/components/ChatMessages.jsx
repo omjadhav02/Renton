@@ -12,7 +12,7 @@ const ChatMessages = ({ messages, isTyping }) => {
     if (!user) return null;
 
     return (
-       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950">
+       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white">
 
   {messages.map((msg) => {
     const isMe = msg.senderId === user.id;
@@ -26,13 +26,12 @@ const ChatMessages = ({ messages, isTyping }) => {
           className={`px-4 py-2 rounded-2xl text-sm max-w-[75%] relative
           ${
             isMe
-              ? "bg-emerald-600 text-white"
-              : "bg-slate-800 text-slate-200 border border-slate-700"
+              ? "bg-indigo-600 text-white"
+              : "bg-slate-100 text-slate-800 border border-slate-200"
           }`}
         >
           {msg.message}
 
-          {/* time */}
           <div className="text-[10px] mt-1 opacity-70 text-right">
             {msg.createdAt
               ? new Date(msg.createdAt).toLocaleTimeString([], {
@@ -42,7 +41,6 @@ const ChatMessages = ({ messages, isTyping }) => {
               : ""}
           </div>
 
-          {/* seen */}
           {isMe && (
             <div className="text-[10px] opacity-70 text-right">
               {msg.seen ? "Seen" : "Sent"}
@@ -56,7 +54,7 @@ const ChatMessages = ({ messages, isTyping }) => {
   <div ref={bottomRef} />
 
   {isTyping && (
-    <div className="text-xs text-slate-400 px-2 animate-pulse">
+    <div className="text-xs text-slate-500 px-2 animate-pulse">
       Typing...
     </div>
   )}

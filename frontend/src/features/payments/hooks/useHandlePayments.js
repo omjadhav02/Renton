@@ -20,8 +20,8 @@ export const useHandlePayments = ({booking}) => {
 
                 handler: async (response) => {
                     await verifyPayments({ ...response,bookingId: booking.id })
-
                     toast.success("Payment successful!")
+                    window.location.reload();
                 }
             }
 

@@ -16,11 +16,18 @@ export const createOrder = async (req, res) => {
             return res.status(404).json({message: "Booking not found!"})
         }
 
+        const ownerId = booking.property.ownerId;
+
+        if(!ownerId ) {
+            return res.status(404).json({message: "Owner not found!"})
+        }
+
         const payment = await prisma.payment.upsert({
             where: { bookingId },
             update: {},
             create: {
                 bookingId,
+                ownerId,
                 amount: booking.property.price,
                 status:"pending",
             }
@@ -87,12 +94,14 @@ export const verifyPayment = async (req, res) => {
 
 export const getPayments = async (req, res) => {
     try {
+        const ownerId = req.user.userId;
         const page = parseInt(req.query.page) || 0;
 
         const payments = await prisma.payment.findMany({
             take: 20,
             skip: page * 20,
             orderBy: { createdAt: "desc" },
+            where: { ownerId }, 
             include: {
                 booking: {
                     include: {
