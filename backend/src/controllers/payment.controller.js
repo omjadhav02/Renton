@@ -85,6 +85,11 @@ export const verifyPayment = async (req, res) => {
             }
         })
 
+        await prisma.booking.update({
+            where: { id: bookingId },
+            data: { status: "approved" }
+        })
+
         res.json({message: "Payment Verified!"})
 
     } catch (error) {

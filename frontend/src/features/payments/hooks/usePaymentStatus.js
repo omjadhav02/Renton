@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { paymentStatus } from "../services/payment.service";
 
-export const usePaymentStatus = ({booking}) => {
+export const usePaymentStatus = ({ booking }) => {
 
     const [payState, setPayState] = useState(null);
 

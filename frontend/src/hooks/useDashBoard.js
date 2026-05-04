@@ -13,6 +13,7 @@ export const useDashBoard = () => {
         totalEarnings: 0,
     });
 
+
     const fetchData = async () => {
     try {
 
@@ -29,9 +30,14 @@ export const useDashBoard = () => {
         (r) => r.status === "pending"
       ).length;
 
-      const totalEarnings = myRequests
-        .filter((r) => r.status === "approved" && r.payment)
-        .reduce((sum, r) => sum + (r.payment?.amount || 0), 0);
+      const totalEarnings = myRequests.reduce((sum, r) => {
+        if (r.status === "approved" && r.payment?.amount) {
+          return sum + r.payment.amount;
+        }
+        return sum;
+      }, 0);;
+
+      
 
       setStats({
         totalProperties,

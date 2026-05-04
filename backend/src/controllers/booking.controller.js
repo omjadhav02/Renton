@@ -58,12 +58,14 @@ export const getMyBookings = async (req, res) => {
                         images: true
                     }
                 }
-            }
+            },
+            
         });
 
         res.json(bookings);
 
     } catch (error) {
+        console.error("Booking fetch error:", error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -89,8 +91,15 @@ export const getBookingRequests = async (req, res)=>{
                         email: true,
                         phone: true,
                     }
+                },
+                payment: {
+                    select: {
+                        id: true,
+                        amount: true,
+                        status: true
+                    }
                 }
-            }
+            },   
         })
 
         if(!bookings) {

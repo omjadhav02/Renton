@@ -99,7 +99,6 @@ const RequestsTable = ({ requests, setRequests, onChat }) => {
                   </button>
                 )}
               </td>
-
             </tr>
           ))}
         </tbody>

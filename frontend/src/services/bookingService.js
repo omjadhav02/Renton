@@ -6,9 +6,14 @@ export const getMyBookings = async () => {
 }
 
 export const getBookingRequests = async () => {
+  try {
     const res = await axiosInstance.get("/bookings/owner");
     return res.data;
-}
+  } catch (err) {
+    console.error(err);
+    return []; // 👈 ALWAYS return array
+  }
+};
 
 export const createBooking = async (propertyId, startDate, endDate) => {
     const res = await axiosInstance.post("/bookings", { propertyId, startDate, endDate })
