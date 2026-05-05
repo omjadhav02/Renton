@@ -2,11 +2,7 @@ import { Worker } from "bullmq";
 import prisma from "../config/prisma.js";
 import { razorpay } from "../config/razorpay.js";
 import IORedis from "ioredis"
-
-const connection = new IORedis(
-    process.env.REDIS_URL,
-    { maxRetriesPerRequest: null }
-);
+import { connection } from "../config/redis.js";
 
 const worker = new Worker(
     "payment-queue",
