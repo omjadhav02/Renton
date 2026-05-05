@@ -1,9 +1,9 @@
 import { Queue } from "bullmq"
 import IORedis from "ioredis"
 
-const connection = new IORedis({
-    maxRetriesPerRequest: null,
-});
+const connection = new IORedis(
+    { maxRetriesPerRequest: null }
+);
 
 export const paymentQueue = new Queue("payment-queue", {
     connection,

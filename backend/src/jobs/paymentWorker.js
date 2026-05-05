@@ -3,9 +3,9 @@ import prisma from "../config/prisma.js";
 import { razorpay } from "../config/razorpay.js";
 import IORedis from "ioredis"
 
-const connection = new IORedis({
-    maxRetriesPerRequest: null,
-});
+const connection = new IORedis(
+    { maxRetriesPerRequest: null }
+);
 
 const worker = new Worker(
     "payment-queue",
