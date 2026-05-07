@@ -84,8 +84,8 @@ export const login = async (req, res) => {
 export const logout = (req, res)=>{
     res.clearCookie("token",{
         httpOnly: true,
-        sameSite: "None",
         secure: true,
+        sameSite: "None",
     });
 
     res.json({

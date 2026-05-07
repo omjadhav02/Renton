@@ -4,4 +4,5 @@ const redisUrl = process.env.NODE_ENV === "production" ? process.env.REDIS_URL :
 
 export const connection = new IORedis(redisUrl, {
   maxRetriesPerRequest: null,
+  tls: {}
 });
