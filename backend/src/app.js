@@ -12,6 +12,7 @@ import paymentRoutes from "./routes/payment.route.js"
 import webhookRoutes from "./routes/webhook.route.js"
 import botRoutes from "./routes/bot.route.js";
 import dotenv from "dotenv"
+import path from "path";
 
 dotenv.config();
 
@@ -39,6 +40,11 @@ app.use("/api/upload", uploadRoutes)
 app.use("/api/payments", paymentRoutes)
 app.use("/api/bot", botRoutes);
 
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "client/dist")))
 
+app.get("*",(req,res) => {
+    res.sendFile(path.join(__dirname, "client/dist/index.html"))
+})
 
 export default app;
