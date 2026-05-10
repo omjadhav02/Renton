@@ -4,6 +4,8 @@ import { razorpay } from "../config/razorpay.js";
 import IORedis from "ioredis"
 import { connection } from "../config/redis.js";
 
+console.log("Payment worker started...")
+
 const worker = new Worker(
     "payment-queue",
     async (job) => {
@@ -30,6 +32,10 @@ const worker = new Worker(
     },
     { connection }
 )
+
+worker.on("completed", (job) => {
+    console.log("Job completed", job.id);
+});
 
 worker.on("failed", (job, err) => {
     console.error("Job failed:", job.id, err);
