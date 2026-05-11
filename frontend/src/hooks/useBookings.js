@@ -19,7 +19,11 @@ export const useBookings = () => {
 
         } catch (error) {
             setError(error);
-            toast.error(error);
+            toast.error(toast.error(
+                error?.response?.data?.message ||
+                error?.message ||
+                "Something went wrong"
+            ))
         } finally {
             setLoading(false);
         }

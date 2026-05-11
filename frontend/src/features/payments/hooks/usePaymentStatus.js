@@ -15,8 +15,10 @@ export const usePaymentStatus = ({ booking }) => {
     }
 
     useEffect(() => {
-        getPaymentStatus();
-    },[]);
+        if (booking?.id) {
+            getPaymentStatus();
+        }
+    }, [booking?.id]);    
 
     return { payState }
 }
