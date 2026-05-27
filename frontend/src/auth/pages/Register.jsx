@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import axiosInstance from "../api/axios";
-import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { useRegister } from "../mutations/useRegister";
 
 function Register() {
-
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const registerMutation = useRegister();
 
     const [form, setForm] = useState({
         name: "",
@@ -14,9 +13,7 @@ function Register() {
         role: "tenant",
         phone: ""
     });
-
-    const [loading, setLoading] = useState(false);
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -29,19 +26,9 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            setLoading(true);
-
-            await axiosInstance.post("/auth/register", form);
-
-            toast.success("Account created 🎉");
-            navigate("/login");
-
-        } catch (error) {
-            toast.error(error.response?.data?.message || "Failed");
-        } finally {
-            setLoading(false);
-        }
+        registerMutation.mutate(
+          form,
+        )
     };
 
 return (

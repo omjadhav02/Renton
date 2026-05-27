@@ -1,37 +1,28 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axiosInstance from "../api/axios";
-import { useAuth } from "../context/AuthContext";
-import toast from "react-hot-toast";
+import { useAuth } from "../../context/AuthContext";
+import { useLogin } from "../mutations/useLogin";
 
 function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
     const { setUser, user } = useAuth();
+
+    const loginMutaion = useLogin();
 
     useEffect(() => {
         if (user) navigate("/");
     }, [user, navigate]);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const res = await axiosInstance.post("/auth/login", {
-                email,
-                password
-            });
-
-            setUser(res.data.user);
-            toast.success("Welcome back 👋");
-            navigate("/");
-
-        } catch {
-            toast.error("Invalid credentials");
-        }
+        loginMutaion.mutate({
+          email,
+          password
+        })
     };
 
 return (
@@ -79,8 +70,8 @@ return (
           </div>
 
           {/* BUTTON */}
-          <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-medium transition shadow-sm">
-            Continue
+          <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-medium transition shadow-sm" disabled={loginMutaion.isPending}>
+            {loginMutaion.isPending ? "Signing in..." : "Continue"}
           </button>
 
         </form>

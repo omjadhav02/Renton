@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./auth/pages/Login";
+import Register from "./auth/pages/Register";
 import PropertyDetails from "./pages/PropertyDetails";
 import MyBookings from "./pages/Tenant/MyBookings";
 import AddProperty from "./pages/Owner/AddProperty";
