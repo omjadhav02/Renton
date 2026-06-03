@@ -1,5 +1,5 @@
-import PropertyCard from "../PropertyCard";
-import PropertySkeleton from "../PropertySkeleton";
+import PropertyCard from "../../components/PropertyCard";
+import PropertySkeleton from "../../components/PropertySkeleton";
 
 function PropertyGrid({ properties, loading, Fav, onSelect }) {
   return (

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Home";
+import Home from "./Home/pages/Home";
 import Login from "./auth/pages/Login";
 import Register from "./auth/pages/Register";
 import PropertyDetails from "./pages/PropertyDetails";
@@ -16,9 +16,9 @@ import Favorites from "./pages/Tenant/Favorites";
 
 import MainLayout from "./layouts/MainLayout";
 import DashBoard from "./pages/Owner/DashBoard";
-import Settings from "./pages/Settings";
-import Transactions from "./pages/Owner/Transactions";
-import Bot from "./pages/Bot";
+import Settings from "./Settings/pages/Settings";
+import Transactions from "./features/payments/pages/Transactions";
+import Bot from "./features/bot/pages/Bot";
 
 
 function App() {

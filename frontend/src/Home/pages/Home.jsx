@@ -1,13 +1,13 @@
-import { useProperties } from "../hooks/useProperties";
-import Hero from "../components/Home/Hero"
-import PropertySection from "../components/Home/PropertySection"
+import { useProperties } from "../../hooks/useProperties";
+import Hero from "../components/Hero";
+import PropertySection from "../components/PropertySection"
 import { useFavorites } from "../hooks/useFavorites";
-import MapView from "../features/map/components/MapView"
+import MapView from "../../features/map/components/MapView"
 import { useState } from "react";
 
 import { IoBedOutline, IoWaterOutline, IoLocationOutline, IoCashOutline, IoOpenOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import Info from "../features/map/components/Info";
+import Info from "../../features/map/components/Info";
 
 function Home() {
   const { properties, loading, handleSearch, error } = useProperties();

@@ -1,4 +1,4 @@
-import Message from "../features/bot/components/Message";
+import Message from "../components/Message";
 
 const Bot = () => {
     return (

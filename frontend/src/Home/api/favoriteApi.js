@@ -1,4 +1,4 @@
-import axiosInstance from "../api/axios"
+import axiosInstance from "../../api/axios";
 
 export const addFavorites = async (propertyId) => {
     const res = await axiosInstance.post(`/favorites`,{

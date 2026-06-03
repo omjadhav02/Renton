@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useFavorites } from "../../hooks/useFavorites";
+import { useFavorites } from "../../Home/hooks/useFavorites";
 import { IoHeart } from "react-icons/io5";
 
 function Favorites() {

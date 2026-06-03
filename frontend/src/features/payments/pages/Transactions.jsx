@@ -1,4 +1,4 @@
-import { usePayments } from "../../features/payments/hooks/usePayments";
+import { usePayments } from "../hooks/usePayments";
 
 function Transactions() {
   const { payments, loading } = usePayments();

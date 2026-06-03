@@ -1,4 +1,4 @@
-import GeneralSettings from "../components/Settings/GeneralSettings"
+import GeneralSettings from "../components/GeneralSettings"
 
 const Settings = () => {
     return (
