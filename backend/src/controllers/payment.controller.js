@@ -1,5 +1,5 @@
 import prisma from "../config/prisma.js"
-import { paymentQueue } from "../queue/paymentQueue.js";
+import { getPaymentQueue } from "../queue/paymentQueue.js";
 import { razorpay } from "../config/razorpay.js"
 import crypto from "crypto";
 
@@ -32,6 +32,7 @@ export const createOrder = async (req, res) => {
                 status:"pending",
             }
         })
+        const paymentQueue = getPaymentQueue();
 
         await paymentQueue.add("create-order", {
             paymentId: payment.id,

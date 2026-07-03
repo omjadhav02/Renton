@@ -1,7 +1,16 @@
-import { Queue } from "bullmq"
-import IORedis from "ioredis"
-import { connection } from "../config/redis.js";
+import { Queue } from "bullmq";
+import { getRedisConnection } from "../config/redis.js";
 
-export const paymentQueue = new Queue("payment-queue", {
-    connection,
-})
+let paymentQueue = null;
+
+export function getPaymentQueue() {
+  if (!paymentQueue) {
+    paymentQueue = new Queue("payment-queue", {
+      connection: getRedisConnection(),
+    });
+
+    console.log("✅ Payment Queue initialized");
+  }
+
+  return paymentQueue;
+}
